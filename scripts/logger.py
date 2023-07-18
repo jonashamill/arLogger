@@ -31,10 +31,9 @@ def getPath():
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    path = (packagePath + "logs/arlog_" + timenow + ".csv")
+    path = (packagePath + "/logs/arlog_" + timenow + ".csv")
 
     return path
-
 
 
 def saveCSV():
@@ -62,7 +61,7 @@ def checkDuplicate(iterable,check):
             return True
 
 
-def getTag(msg, start):
+def getTag(msg):
     for marker in msg.markers:
         global idList
         global currentMarker
