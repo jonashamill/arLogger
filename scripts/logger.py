@@ -41,6 +41,8 @@ def makeFolder():
 
     path, _ = getPath()
 
+    testFile = None
+
     # test folder permisions
     try:
         testFile = open(os.path.join(path, 'test.txt'), 'w+')
