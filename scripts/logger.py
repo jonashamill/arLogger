@@ -37,7 +37,13 @@ def getPath():
 
 
 def saveCSV():
-    with open(getPath())
+ 
+    with open(getPath(), "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(['ID', 'Time'])
+        
+        for i in range(len(idList)):
+            writer.writerow([idList[i], timeList[i]])
 
 
 def rosInit():
