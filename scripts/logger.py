@@ -48,7 +48,7 @@ def saveCSV():
 
 def rosInit():
 
-    rospy.init_node("ar_logger")
+    rospy.init_node("arLogger")
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 

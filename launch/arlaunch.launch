@@ -6,7 +6,13 @@
 
   <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
 
-    <ris
+    <rosparam command="load" file="$(find leo_example_follow_ar_tag)/config/alvar.yaml" />
+
+    <remap from="camera_image" to="$(arg cam_image_topic)" />
+    <remap from="camera_info" to="$(arg cam_info_topic)" />
+  </node>
+
+  <node name="arLogger" pkg="arLogger" type="logger.py" output="screen"/>
 
 
 </launch>
