@@ -12,6 +12,7 @@ import time
 idList = []
 timeList = []
 currentMarker = 999
+start = time.perf_counter()
 
 
 def getTime():
@@ -50,7 +51,7 @@ def rosInit():
 
     rospy.init_node("ar_logger")
 
-    ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, callback_ar_pose)
+    ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
     rospy.spin()
     rospy.on_shutdown()
@@ -61,29 +62,29 @@ def checkDuplicate(iterable,check):
             return True
 
 
-def getTag(msg):
+def getTag(msg, start):
     for marker in msg.markers:
         global idList
         global currentMarker
 
+        if marker.id != currentMarker:
+            
+            finish = time.perf_counter()
+            elapsed = round(finish-start, 5)
+            currentMarker = marker.id
 
+            if checkDuplicate(idList, currentMarker) == True:
+                continue
+            else:
+                timeList.append(elapsed)
+                idList.append(currentMarker)
 
-def main():
-
-    
-
-    start = time.perf_counter()
-
-    finish = time.perf_counter()
-
-    elapsed = round(finish-start, 5)
-
-
-
+            rospy.loginfo(currentMarker)
+            rospy.loginfo(elapsed)
+            rospy.loginfo(idList)
 
 
 
 
 if __name__ == '__main__':
     rosInit()
-    main()
