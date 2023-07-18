@@ -35,7 +35,6 @@ def getPath():
 
     fullpath = os.path.join(path, "arlog_" + timenow + ".csv")
 
-    print (path)
     print (fullpath)
 
     return path, fullpath
@@ -63,7 +62,6 @@ def makeFolder():
 
 def saveCSV():
     
-
     _, filename = getPath()
 
     with open(filename, "w", newline="") as file:
@@ -83,6 +81,7 @@ def rosInit():
     rospy.spin()
     rospy.on_shutdown(saveCSV)
 
+
 def checkDuplicate(iterable,check):
     for i in iterable:
         if i == check:
@@ -90,6 +89,7 @@ def checkDuplicate(iterable,check):
 
 
 def getTag(msg):
+
     for marker in msg.markers:
         global idList
         global currentMarker
@@ -97,17 +97,17 @@ def getTag(msg):
         if marker.id != currentMarker:
             
             finish = time.perf_counter()
-            elapsed = round(finish-start, 5)
+            timeTaken = round(finish-start, 5)
             currentMarker = marker.id
 
             if checkDuplicate(idList, currentMarker) == True:
                 continue
             else:
-                timeList.append(elapsed)
+                timeList.append(timeTaken)
                 idList.append(currentMarker)
 
             rospy.loginfo(currentMarker)
-            rospy.loginfo(elapsed)
+            rospy.loginfo(timeTaken)
             rospy.loginfo(idList)
 
 
