@@ -6,7 +6,7 @@ from ar_track_alvar_msgs.msg import AlvarMarkers
 import rospkg
 from datetime import datetime
 import time
-
+import os
 
 #Global vars
 idList = []
@@ -31,14 +31,37 @@ def getPath():
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    path = (packagePath + "/logs/arlog_" + timenow + ".csv")
+    path = os.path.join(packagePath, "logs")
 
-    return path
+    fullpath = os.path.join(path, "/arlog_" + timenow + ".csv")
+
+    return path, fullpath
+
+def makeFolder():
+
+    path, _ = getPath()
+
+    # test folder permisions
+    try:
+        testFile = open(os.path.join(path, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(path)
+        except OSError:
+            print("No log folder created")
+        else:
+            print("Log folder created")
+
+    testFile.close()
+    os.remove(testFile.name)
 
 
 def saveCSV():
- 
-    with open(getPath(), "w", newline="") as file:
+    
+
+    _, filename = getPath()
+
+    with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(['ID', 'Time'])
         
@@ -86,4 +109,5 @@ def getTag(msg):
 
 
 if __name__ == '__main__':
+    makeFolder()
     rosInit()
