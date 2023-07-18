@@ -53,7 +53,7 @@ def rosInit():
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
     rospy.spin()
-    rospy.on_shutdown()
+    rospy.on_shutdown(saveCSV)
 
 def checkDuplicate(iterable,check):
     for i in iterable:
