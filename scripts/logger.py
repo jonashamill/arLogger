@@ -19,7 +19,7 @@ def getTime():
 
     #grabbing time and date to provide unique ID for logs
     dateTime = datetime.now()
-    dtString = dateTime.strftime("%Y-%m-%d %H:%M:%S") #ISO 8601 Standard
+    dtString = dateTime.strftime("%Y%m%d%H%M%S") #ISO 8601 Standard
 
     return dtString
 
@@ -34,6 +34,9 @@ def getPath():
     path = os.path.join(packagePath, "logs")
 
     fullpath = os.path.join(path, "/arlog_" + timenow + ".csv")
+
+    print (path)
+    print (fullpath)
 
     return path, fullpath
 
