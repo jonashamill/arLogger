@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="cam_image_topic" default="camera/image_raw" />
+  <arg name="cam_info_topic" default="camera/camera_info" />
+
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
+
+    <ris
+
+
+</launch>
+ 
