@@ -77,6 +77,7 @@ def rosInit():
 
     rospy.init_node("arLogger")
 
+
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
     rospy.spin()
@@ -117,18 +118,22 @@ def getTag(msg):
 
 def timeSince(timeTaken):
 
+    # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
+    timeThresholdLow = rospy.get_param("~timeThresholdLow", 8)
+    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 10)
+
 
     # Init with base value
     plastic = 0
     
 
-    if timeTaken > 10:
+    if timeTaken > timeThresholdHigh:
         
         plastic = 1
 
         rospy.loginfo('decreasing speed')
 
-    elif timeTaken < 3:
+    elif timeTaken < timeThresholdLow:
         
         plastic = 2
 
