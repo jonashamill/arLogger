@@ -137,7 +137,7 @@ def timeSince(timeTaken):
     
 
     # Publish 'plastic' as a ROS topic
-    plasticPub = rospy.Publisher('plastic_topic', Int32, queue_size=10)
+    plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
     plasticPub.publish(plastic)
     
 
