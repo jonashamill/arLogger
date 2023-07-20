@@ -7,6 +7,7 @@ import rospkg
 from datetime import datetime
 import time
 import os
+from std_msgs.msg import Int32
 
 #Global vars
 idList = []
@@ -105,10 +106,40 @@ def getTag(msg):
             else:
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
+            
+
+            timeSince(timeTaken)
+
 
             rospy.loginfo(currentMarker)
             rospy.loginfo(timeTaken)
             rospy.loginfo(idList)
+
+def timeSince(timeTaken):
+
+
+    # Init with base value
+    plastic = 0
+    
+
+    if timeTaken > 10:
+        
+        plastic = 1
+
+        rospy.loginfo('decreasing speed')
+
+    elif timeTaken < 3:
+        
+        plastic = 2
+
+        rospy.loginfo('increasing speed')
+
+    
+
+    # Publish 'plastic' as a ROS topic
+    plasticPub = rospy.Publisher('plastic_topic', Int32, queue_size=10)
+    plasticPub.publish(plastic)
+    
 
 
 
