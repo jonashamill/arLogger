@@ -119,8 +119,8 @@ def getTag(msg):
 def timeSince(timeTaken):
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
-    timeThresholdLow = rospy.get_param("~timeThresholdLow", 8)
-    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 10)
+    timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
+    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
     # Init with base value
