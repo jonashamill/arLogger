@@ -126,6 +126,7 @@ def timeSince(timeTaken):
     # Init with base value
     plastic = 0
     
+    rospy.loginfo(timeTaken)
 
     if timeTaken < timeThresholdHigh:
         
@@ -139,7 +140,7 @@ def timeSince(timeTaken):
 
         rospy.loginfo('increasing speed')
 
-    
+    rospy.loginfo(timeTaken)
 
     # Publish 'plastic' as a ROS topic
     plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
