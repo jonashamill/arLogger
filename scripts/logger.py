@@ -132,13 +132,13 @@ def timeSince(timeSinceLast):
     
     rospy.loginfo(timeSinceLast)
 
-    if timeTaken < timeThresholdHigh:
+    if timeSinceLast < timeThresholdHigh:
         
         plastic = 1
 
         rospy.loginfo('decreasing speed')
 
-    elif timeTaken > timeThresholdLow:
+    elif timeSinceLast > timeThresholdLow:
         
         plastic = 2
 
