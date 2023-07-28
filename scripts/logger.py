@@ -97,6 +97,7 @@ def getTag(msg):
     for marker in msg.markers:
         global idList
         global currentMarker
+        global timeTaken
 
         if marker.id != currentMarker:
             
