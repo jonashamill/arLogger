@@ -12,6 +12,8 @@ from std_msgs.msg import Int32
 #Global vars
 idList = []
 timeList = []
+timeSinceList = []
+timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
 
@@ -67,10 +69,10 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time'])
+        writer.writerow(['ID', 'Time', 'Timesince'])
         
         for i in range(len(idList)):
-            writer.writerow([idList[i], timeList[i]])
+            writer.writerow([idList[i], timeList[i], timeSinceList[i]])
 
 
 def rosInit():
@@ -99,6 +101,7 @@ def getTag(msg):
         if marker.id != currentMarker:
             
             finish = time.perf_counter()
+            timeSinceLast = round(finish-timeTaken, 5)
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
 
@@ -107,16 +110,17 @@ def getTag(msg):
             else:
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
+                timeSinceList.append(timeSinceLast)
             
 
-            timeSince(timeTaken)
+            timeSince(timeSinceLast)
 
 
             rospy.loginfo(currentMarker)
             rospy.loginfo(timeTaken)
             rospy.loginfo(idList)
 
-def timeSince(timeTaken):
+def timeSince(timeSinceLast):
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
     timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
@@ -126,7 +130,7 @@ def timeSince(timeTaken):
     # Init with base value
     plastic = 0
     
-    rospy.loginfo(timeTaken)
+    rospy.loginfo(timeSinceLast)
 
     if timeTaken < timeThresholdHigh:
         
@@ -140,7 +144,7 @@ def timeSince(timeTaken):
 
         rospy.loginfo('increasing speed')
 
-    rospy.loginfo(timeTaken)
+    
 
     # Publish 'plastic' as a ROS topic
     plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
