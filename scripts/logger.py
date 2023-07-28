@@ -7,7 +7,7 @@ import rospkg
 from datetime import datetime
 import time
 import os
-from std_msgs.msg import Int32
+from std_msgs.msg import Int32, Float32
 
 #Global vars
 idList = []
@@ -86,8 +86,8 @@ def rosInit():
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
-    rospy.Subscriber('maxVelocity', Int32, maxVelocityCallback)
-    rospy.Subscriber('minVelocity', Int32, minVelocityCallback)
+    rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
+    rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
 
     rospy.spin()
     rospy.on_shutdown(saveCSV)
