@@ -13,9 +13,13 @@ from std_msgs.msg import Int32
 idList = []
 timeList = []
 timeSinceList = []
+minList = []
+maxList = []
 timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
+maxVel = 0
+minVel = 0
 
 
 def getTime():
@@ -69,10 +73,10 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'Min Velocity', 'Max Velocity'])
         
         for i in range(len(idList)):
-            writer.writerow([idList[i], timeList[i], timeSinceList[i]])
+            writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i]])
 
 
 def rosInit():
@@ -82,6 +86,9 @@ def rosInit():
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
+    rospy.Subscriber('maxVelocity', Int32, maxVelocityCallback)
+    rospy.Subscriber('minVelocity', Int32, minVelocityCallback)
+
     rospy.spin()
     rospy.on_shutdown(saveCSV)
 
@@ -90,6 +97,21 @@ def checkDuplicate(iterable,check):
     for i in iterable:
         if i == check:
             return True
+
+
+def maxVelocityCallback(msg):
+
+    global maxVel
+
+    maxVel = msg.data
+
+
+def minVelocityCallback(msg):
+
+    global minVel
+
+    minVel = msg.data
+
 
 
 def getTag(msg):
@@ -105,10 +127,15 @@ def getTag(msg):
             timeSinceLast = round(finish-timeTaken, 5)
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
+            
+
+            
 
             if checkDuplicate(idList, currentMarker) == True:
                 continue
             else:
+                minList.append(minVel)
+                maxList.append(maxVel)
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
