@@ -129,7 +129,7 @@ def getTag(msg):
             
             finish = time.perf_counter()
 
-            if not timeList:  # Check if timeList is empty
+            if currentMarker == 999:  # Check if timeList is empty
                 timeSinceLast = 0
             else:
                 timeSinceLast = round(finish - timeList[-1], 5)
