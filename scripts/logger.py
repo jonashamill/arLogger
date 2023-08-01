@@ -135,7 +135,7 @@ def getTag(msg):
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
             
-            timeSinceList = 0
+            timeSinceLast = 0
             
 
             if checkDuplicate(idList, currentMarker) == True:
