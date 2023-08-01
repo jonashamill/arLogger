@@ -12,6 +12,7 @@ from std_msgs.msg import Int32, Float32
 #Global vars
 idList = []
 timeList = []
+lastTimestamp=[]
 timeSinceList = []
 minList = []
 maxList = []
@@ -89,7 +90,7 @@ def rosInit():
     rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
     rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
 
-    rospy.spin()
+    
     rospy.on_shutdown(saveCSV)
 
 
@@ -120,11 +121,13 @@ def getTag(msg):
         global idList
         global currentMarker
         global timeTaken
+        global lastTimestamp
 
         if marker.id != currentMarker:
             
             finish = time.perf_counter()
-            timeSinceLast = round(finish-timeTaken, 5)
+            timeSinceLast = round(finish-lastTimestamp.get(marker.id, finish), 5)
+            lastTimestamp[marker.id] = finish
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
             
@@ -185,3 +188,5 @@ def timeSince(timeSinceLast):
 if __name__ == '__main__':
     makeFolder()
     rosInit()
+
+    rospy.spin()
