@@ -142,10 +142,10 @@ def getTag(msg):
                 continue
             else:
 
-                if currentMarker == 999:  # Check if timeList is empty
-                    timeSinceLast = 0
-                else:
+                if len(timeList) > 0:
                     timeSinceLast = round(finish - timeList[-1], 5)
+                else:
+                    timeSinceLast = 0
 
                 #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
                 lastTimestamp[currentMarker] = finish
