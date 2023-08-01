@@ -12,7 +12,6 @@ from std_msgs.msg import Int32, Float32
 #Global vars
 idList = []
 timeList = []
-lastTimestamp={}
 timeSinceList = []
 minList = []
 maxList = []
@@ -122,7 +121,6 @@ def getTag(msg):
     global idList
     global currentMarker
     global timeTaken
-    global lastTimestamp
 
     for marker in msg.markers:
         
@@ -145,8 +143,8 @@ def getTag(msg):
                 if len(timeList) > 0:
                     rospy.loginfo('timelist: ' + str(timeList))
                     rospy.loginfo('timelist-1:  ' + str(timeList[-1]))
-                    lastTimestamp = timeList[-1]
-                    timeSinceLast = finish - lastTimestamp
+                    lastTimestamp = int(timeList[-1])
+                    timeSinceLast = int(finish) - lastTimestamp
                     rospy.loginfo('timesincelast: ' + str(timeSinceLast))
 
                     
