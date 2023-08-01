@@ -153,7 +153,7 @@ def getTag(msg):
                     timeSinceLast = 0
 
                 #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
-                lastTimestamp[currentMarker] = finish
+                # lastTimestamp[currentMarker] = finish
 
                 minList.append(minVel)
                 maxList.append(maxVel)
