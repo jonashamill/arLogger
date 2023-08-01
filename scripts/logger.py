@@ -135,7 +135,7 @@ def getTag(msg):
             timeTaken = round(finish-start, 0)
             currentMarker = marker.id
             
-            timeSinceLast = 0
+            
             
 
             if checkDuplicate(idList, currentMarker) == True:
@@ -144,11 +144,15 @@ def getTag(msg):
 
                 if len(timeList) > 0:
                     rospy.loginfo('timelist' + str(timeList))
-                    rospy.loginfo('timelist-1' + str(timeList[-1]))
+                    rospy.loginfo('timelist-1 ' + str(timeList[-1]))
+                    lastTimestamp = int(timeList[-1])
+                    timeSinceLast = int(round(finish, 0)-lastTimestamp)
+                    rospy.loginfo('timesincelast: ' + str(timeSinceLast))
 
                     
                 else:
                     rospy.loginfo('hi')
+                    timeSinceLast = 0
 
                 #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
                 lastTimestamp[currentMarker] = finish
