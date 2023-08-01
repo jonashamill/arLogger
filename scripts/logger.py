@@ -144,8 +144,7 @@ def getTag(msg):
                     rospy.loginfo('timelist: ' + str(timeList))
                     rospy.loginfo('timelist-1:  ' + str(timeList[-1]))
                     lastTimestamp = int(timeList[-1])
-                    rospy.loginfo(finish)
-                    timeSinceLast = int(finish) - lastTimestamp
+                    timeSinceLast = int(timeTaken) - lastTimestamp
                     rospy.loginfo('timesincelast: ' + str(timeSinceLast))
 
                     
