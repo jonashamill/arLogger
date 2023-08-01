@@ -143,6 +143,7 @@ def getTag(msg):
             else:
 
                 if len(timeList) > 0:
+                    rospy.loginfo('timelist' + str(timeList))
                     rospy.loginfo('timelist-1' + str(timeList[-1]))
 
                     
