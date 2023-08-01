@@ -128,7 +128,13 @@ def getTag(msg):
         if marker.id != currentMarker:
             
             finish = time.perf_counter()
-            timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
+
+            if currentMarker > 0:
+                timeSinceLast = round(finish - timeList[-1], 5)
+            else:
+                timeSinceLast = 0
+
+            #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
             lastTimestamp[marker.id] = finish
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
@@ -165,17 +171,19 @@ def timeSince(timeSinceLast):
     
     rospy.loginfo(timeSinceLast)
 
-    if timeSinceLast < timeThresholdHigh:
+    if currentMarker > 0: 
         
-        plastic = 1
+        if timeSinceLast < timeThresholdHigh:
+            
+            plastic = 1
 
-        rospy.loginfo('decreasing speed')
+            rospy.loginfo('decreasing speed')
 
-    elif timeSinceLast > timeThresholdLow:
-        
-        plastic = 2
+        elif timeSinceLast > timeThresholdLow:
+            
+            plastic = 2
 
-        rospy.loginfo('increasing speed')
+            rospy.loginfo('increasing speed')
 
     
 
