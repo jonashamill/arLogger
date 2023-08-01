@@ -131,13 +131,7 @@ def getTag(msg):
             
             finish = time.perf_counter()
 
-            if currentMarker == 999:  # Check if timeList is empty
-                timeSinceLast = 0
-            else:
-                timeSinceLast = round(finish - timeList[-1], 5)
-
-            #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
-            lastTimestamp[currentMarker] = finish
+            
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
             
@@ -147,6 +141,15 @@ def getTag(msg):
             if checkDuplicate(idList, currentMarker) == True:
                 continue
             else:
+
+                if currentMarker == 999:  # Check if timeList is empty
+                    timeSinceLast = 0
+                else:
+                    timeSinceLast = round(finish - timeList[-1], 5)
+
+                #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
+                lastTimestamp[currentMarker] = finish
+
                 minList.append(minVel)
                 maxList.append(maxVel)
                 timeList.append(timeTaken)
@@ -154,7 +157,7 @@ def getTag(msg):
                 timeSinceList.append(timeSinceLast)
             
 
-            timeSince(timeSinceLast)
+                timeSince(timeSinceLast)
 
 
             rospy.loginfo(currentMarker)
