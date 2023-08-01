@@ -119,11 +119,13 @@ def minVelocityCallback(msg):
 
 def getTag(msg):
 
+    global idList
+    global currentMarker
+    global timeTaken
+    global lastTimestamp
+
     for marker in msg.markers:
-        global idList
-        global currentMarker
-        global timeTaken
-        global lastTimestamp
+        
 
         if marker.id != currentMarker:
             
@@ -135,7 +137,7 @@ def getTag(msg):
                 timeSinceLast = round(finish - timeList[-1], 5)
 
             #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
-            lastTimestamp[marker.id] = finish
+            lastTimestamp[currentMarker] = finish
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
             
