@@ -106,12 +106,16 @@ def maxVelocityCallback(msg):
 
     maxVel = msg.data
 
+    rospy.loginfo("Received new max velocity: {}".format(maxVel))
+
 
 def minVelocityCallback(msg):
 
     global minVel
 
     minVel = msg.data
+
+    rospy.loginfo("Received new min velocity: {}".format(minVel)) 
 
 
 
@@ -126,7 +130,7 @@ def getTag(msg):
         if marker.id != currentMarker:
             
             finish = time.perf_counter()
-            timeSinceLast = round(finish-lastTimestamp.get(marker.id, finish), 5)
+            timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
             lastTimestamp[marker.id] = finish
             timeTaken = round(finish-start, 5)
             currentMarker = marker.id
