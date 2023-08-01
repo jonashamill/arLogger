@@ -163,7 +163,7 @@ def getTag(msg):
             rospy.loginfo(currentMarker)
             rospy.loginfo(timeTaken)
             rospy.loginfo(idList)
-            rospy.loginfo(timeList)
+            rospy.loginfo(timeList[-1])
 
 def timeSince(timeSinceLast):
 
