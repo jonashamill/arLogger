@@ -132,7 +132,7 @@ def getTag(msg):
             finish = time.perf_counter()
 
             
-            timeTaken = round(finish-start, 5)
+            timeTaken = round(finish-start, 0)
             currentMarker = marker.id
             
             timeSinceLast = 0
