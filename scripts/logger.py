@@ -12,7 +12,7 @@ from std_msgs.msg import Int32, Float32
 #Global vars
 idList = []
 timeList = []
-lastTimestamp=[]
+lastTimestamp={}
 timeSinceList = []
 minList = []
 maxList = []
@@ -106,7 +106,6 @@ def maxVelocityCallback(msg):
 
     maxVel = msg.data
 
-    rospy.loginfo("Received new max velocity: {}".format(maxVel))
 
 
 def minVelocityCallback(msg):
@@ -115,7 +114,6 @@ def minVelocityCallback(msg):
 
     minVel = msg.data
 
-    rospy.loginfo("Received new min velocity: {}".format(minVel)) 
 
 
 
