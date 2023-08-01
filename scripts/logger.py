@@ -143,9 +143,9 @@ def getTag(msg):
             else:
 
                 if len(timeList) > 0:
-                    timeSinceLast = round(finish - timeList[-1], 5)
+                    rospy.loginfo(timeList[-1])
                 else:
-                    timeSinceLast = 0
+                    rospy.loginfo('hi')
 
                 #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
                 lastTimestamp[currentMarker] = finish
@@ -163,7 +163,7 @@ def getTag(msg):
             rospy.loginfo(currentMarker)
             rospy.loginfo(timeTaken)
             rospy.loginfo(idList)
-            rospy.loginfo(timeList[-1])
+            
 
 def timeSince(timeSinceLast):
 
