@@ -143,10 +143,10 @@ def getTag(msg):
             else:
 
                 if len(timeList) > 0:
-                    rospy.loginfo('timelist' + str(timeList))
-                    rospy.loginfo('timelist-1 ' + str(timeList[-1]))
-                    lastTimestamp = int(timeList[-1])
-                    timeSinceLast = int(round(finish, 0)-lastTimestamp)
+                    rospy.loginfo('timelist: ' + str(timeList))
+                    rospy.loginfo('timelist-1:  ' + str(timeList[-1]))
+                    lastTimestamp = timeList[-1]
+                    timeSinceLast = finish - lastTimestamp
                     rospy.loginfo('timesincelast: ' + str(timeSinceLast))
 
                     
