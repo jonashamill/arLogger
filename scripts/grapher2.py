@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 
 def main():
     # Read the data from the CSV file
-    data = pd.read_csv('../logs/arlog_20230801202825.csv')
+    file = 'arlog_20230801201926'
+    data = pd.read_csv('../logs/'+ file +'.csv')
 
     # Extracting data columns from the DataFrame
     time = data['Time']
@@ -26,7 +27,7 @@ def main():
     # Set axis labels and title
     plt.xlabel('Time (s)')
     plt.ylabel('Velocity (m/s)')
-    plt.title('With Plastic Behaviour')
+    plt.title('With Static Behaviour')
 
     # Add legend
     plt.legend()
@@ -34,7 +35,13 @@ def main():
     # Show the plot
     plt.grid(True)
     plt.tight_layout()
+
+    # Save the plot as a PNG file
+    plt.savefig('../graphs/'+ file +'.png', dpi=300)  # dpi parameter controls the resolution of the image
+
+    # Show the plot
     plt.show()
+
 
 if __name__ == '__main__':
     main()
