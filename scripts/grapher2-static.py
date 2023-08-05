@@ -35,6 +35,8 @@ def main(file_path, label_prefix):
     plt.tight_layout()
     plt.show()
 
+
 if __name__ == '__main__':
+    # Call the main function for each CSV file
     main('../logs/arlog_20230801201926.csv', 'Static')
     main('../logs/arlog_20230801202825.csv', 'Plastic')
