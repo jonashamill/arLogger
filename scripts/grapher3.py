@@ -37,7 +37,7 @@ def main(file, type):
     # Set axis labels and title for left y-axis
     ax1.set_xlabel('Time (s)')
     ax1.set_ylabel('Velocity (% of Max)')
-    ax1.set_title('With '+ type +' Behaviour')
+    ax1.set_title('With '+ type +' Behaviour (w/ anomalies)')
 
     # Add legend for left y-axis at the right side (about midway up)
     ax1.legend(loc='center left', bbox_to_anchor=(1.2, 0.5))
@@ -57,12 +57,15 @@ def main(file, type):
     ax1.yaxis.set_label_position("left")
     ax1.set_ylabel("Velocity (% of Max)", fontsize=10)
 
+    # Set x-axis limit to include the maximum value of time
+    ax1.set_xlim(left=min(time), right=max(time))
+
     # Show the plot
     plt.grid(True)
     plt.tight_layout()
 
     # Save the plot as a PNG file
-    plt.savefig('../graphs/'+ file +'_G3.png', dpi=300)  # dpi parameter controls the resolution of the image
+    plt.savefig('../graphs/'+ file +'_anomG3.png', dpi=300)  # dpi parameter controls the resolution of the image
 
     # Show the plot
     plt.show()
