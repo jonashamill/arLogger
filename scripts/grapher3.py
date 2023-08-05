@@ -39,8 +39,8 @@ def main(file, type):
     ax1.set_ylabel('Velocity (% of Max)')
     ax1.set_title('With '+ type +' Behaviour')
 
-    # Add legend for left y-axis
-    ax1.legend(loc='upper left')
+    # Add legend for left y-axis at the right side (about midway up)
+    ax1.legend(loc='center left', bbox_to_anchor=(1.2, 0.5))
 
     # Create a second y-axis on the right-hand side for displaying the IDs
     ax2 = ax1.twinx()
