@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 def main(file, type):
     # Read the data from the CSV file
-    file = 'arlog_20230801202825'
+    # file = 'arlog_20230801202825'
     data = pd.read_csv('../logs/'+ file +'.csv')
 
     # Extracting data columns from the DataFrame
@@ -62,7 +62,7 @@ def main(file, type):
     plt.tight_layout()
 
     # Save the plot as a PNG file
-    plt.savefig('../graphs/'+ file +'3.png', dpi=300)  # dpi parameter controls the resolution of the image
+    plt.savefig('../graphs/'+ file +'_G3.png', dpi=300)  # dpi parameter controls the resolution of the image
 
     # Show the plot
     plt.show()
