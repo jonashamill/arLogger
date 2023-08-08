@@ -188,16 +188,16 @@ def timeSince(timeSinceLast):
             
             plastic = 1
 
-            rospy.set_param('max_vel_x', 10)
-            rospy.set_param('acc_lim_x', 1)
+            rospy.set_param('/max_vel_x', 10)
+            rospy.set_param('/acc_lim_x', 1)
 
             rospy.loginfo('decreasing speed')
 
         elif timeSinceLast > timeThresholdLow:
             
             plastic = 2
-            rospy.set_param('max_vel_x', 100)
-            rospy.set_param('acc_lim_x', 100)
+            rospy.set_param('/max_vel_x', 100)
+            rospy.set_param('/acc_lim_x', 100)
 
             rospy.loginfo('increasing speed')
 
