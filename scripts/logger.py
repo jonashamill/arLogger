@@ -86,8 +86,8 @@ def rosInit():
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
-    rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
-    rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
+    # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
+    # rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
 
     
     rospy.on_shutdown(saveCSV)
@@ -99,19 +99,19 @@ def checkDuplicate(iterable,check):
             return True
 
 
-def maxVelocityCallback(msg):
+# def maxVelocityCallback(msg):
 
-    global maxVel
+#     global maxVel
 
-    maxVel = msg.data
+#     maxVel = msg.data
 
 
 
-def minVelocityCallback(msg):
+# def minVelocityCallback(msg):
 
-    global minVel
+#     global minVel
 
-    minVel = msg.data
+#     minVel = msg.data
 
 
 
@@ -188,11 +188,16 @@ def timeSince(timeSinceLast):
             
             plastic = 1
 
+            rospy.set_param('max_vel_x', 10)
+            rospy.set_param('acc_lim_x', 1)
+
             rospy.loginfo('decreasing speed')
 
         elif timeSinceLast > timeThresholdLow:
             
             plastic = 2
+            rospy.set_param('max_vel_x', 100)
+            rospy.set_param('acc_lim_x', 100)
 
             rospy.loginfo('increasing speed')
 
