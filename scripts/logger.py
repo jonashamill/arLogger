@@ -122,6 +122,7 @@ def getTag(msg):
     global idList
     global currentMarker
     global timeTaken
+    global tick
 
     for marker in msg.markers:
         
