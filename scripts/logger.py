@@ -16,11 +16,28 @@ timeSinceList = []
 minList = []
 maxList = []
 timeTaken = 0
-currentMarker = 999
+# currentMarker = 999
+buffer = []
 start = time.perf_counter()
 maxVel = 0
 minVel = 0
 tick = 0
+
+
+def checkBuffer(buffer,check):
+    buffer.append(check)
+
+    if len(buffer) == 11:
+        buffer.pop(0)
+    
+    tick = 0
+
+    for i in buffer:
+        if i == check:
+            tick += 1
+
+            if tick == 3:
+                return True
 
 
 def getTime():
@@ -119,61 +136,47 @@ def checkDuplicate(iterable,check):
 
 def getTag(msg):
 
-    global idList
-    global currentMarker
+    # global idList
+    # global currentMarker
     global timeTaken
-    global tick
+    # global tick
 
     for marker in msg.markers:
         
-        if marker.id < 18 and checkDuplicate(idList,marker.id) == None:
+        if marker.id < 18 and checkDuplicate(idList,marker.id) == None and checkBuffer(buffer,marker.id) == True:
 
 
-            if marker.id != currentMarker:
                 
-                finish = time.perf_counter()
+            finish = time.perf_counter()
+            timeTaken = round(finish-start, 2)
+
+
+            if len(timeList) > 0:
+                rospy.loginfo('timelist: ' + str(timeList))
+                rospy.loginfo('timelist-1:  ' + str(timeList[-1]))
+                lastTimestamp = timeList[-1]
+                timeSinceLast = round(timeTaken - lastTimestamp, 2)
+                rospy.loginfo('timesincelast: ' + str(timeSinceLast))
 
                 
-                timeTaken = round(finish-start, 2)
-                currentMarker = marker.id
-                tick = 0
-                
-                
-                
-
-                    
             else:
+                rospy.loginfo('timesince: 0')
+                timeSinceLast = 0
 
-                tick += 1        
-                    
-            if tick == 3:
-
-                if len(timeList) > 0:
-                    rospy.loginfo('timelist: ' + str(timeList))
-                    rospy.loginfo('timelist-1:  ' + str(timeList[-1]))
-                    lastTimestamp = timeList[-1]
-                    timeSinceLast = round(timeTaken - lastTimestamp, 2)
-                    rospy.loginfo('timesincelast: ' + str(timeSinceLast))
-
-                    
-                else:
-                    rospy.loginfo('timesince: 0')
-                    timeSinceLast = 0
-
-                    #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
-                    # lastTimestamp[currentMarker] = finish
+                #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
+                # lastTimestamp[currentMarker] = finish
 
                 minList.append(minVel)
                 maxList.append(maxVel)
                 timeList.append(timeTaken)
-                idList.append(currentMarker)
+                idList.append(marker.id)
                 timeSinceList.append(timeSinceLast)
             
 
                 timeSince(timeSinceLast)
 
             
-            rospy.loginfo(currentMarker)
+            rospy.loginfo(marker.id)
             rospy.loginfo(timeTaken)
             rospy.loginfo(idList)
             
