@@ -139,6 +139,15 @@ def getTag(msg):
                 tick = 0
                 
                 
+                
+
+                    
+            else:
+
+                tick += 1        
+                    
+            if tick == 3:
+
                 if len(timeList) > 0:
                     rospy.loginfo('timelist: ' + str(timeList))
                     rospy.loginfo('timelist-1:  ' + str(timeList[-1]))
@@ -153,13 +162,6 @@ def getTag(msg):
 
                     #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
                     # lastTimestamp[currentMarker] = finish
-
-                    
-            else:
-
-                tick += 1        
-                    
-            if tick == 3:
 
                 minList.append(minVel)
                 maxList.append(maxVel)
