@@ -20,6 +20,7 @@ currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 minVel = 0
+tick = 0
 
 
 def getTime():
