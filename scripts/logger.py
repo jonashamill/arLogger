@@ -16,28 +16,10 @@ timeSinceList = []
 minList = []
 maxList = []
 timeTaken = 0
-# currentMarker = 999
-buffer = []
+currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 minVel = 0
-tick = 0
-
-
-def checkBuffer(buffer,check):
-    buffer.append(check)
-
-    if len(buffer) == 11:
-        buffer.pop(0)
-    
-    tick = 0
-
-    for i in buffer:
-        if i == check:
-            tick += 1
-
-            if tick == 3:
-                return True
 
 
 def getTime():
@@ -136,20 +118,27 @@ def checkDuplicate(iterable,check):
 
 def getTag(msg):
 
-    # global idList
-    # global currentMarker
+    global idList
+    global currentMarker
     global timeTaken
-    # global tick
 
     for marker in msg.markers:
         
-        if checkBuffer(buffer,marker.id):
-            if marker.id < 18 and checkDuplicate(idList,marker.id):
 
+        if marker.id != currentMarker:
+            
+            finish = time.perf_counter()
 
-                finish = time.perf_counter()
-                timeTaken = round(finish-start, 2)
+            
+            timeTaken = round(finish-start, 2)
+            currentMarker = marker.id
+            
+            
+            
 
+            if checkDuplicate(idList, currentMarker) == True:
+                continue
+            else:
 
                 if len(timeList) > 0:
                     rospy.loginfo('timelist: ' + str(timeList))
@@ -163,23 +152,23 @@ def getTag(msg):
                     rospy.loginfo('timesince: 0')
                     timeSinceLast = 0
 
-                    #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
-                    # lastTimestamp[currentMarker] = finish
+                #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
+                # lastTimestamp[currentMarker] = finish
 
-                    minList.append(minVel)
-                    maxList.append(maxVel)
-                    timeList.append(timeTaken)
-                    idList.append(marker.id)
-                    timeSinceList.append(timeSinceLast)
-                
+                minList.append(minVel)
+                maxList.append(maxVel)
+                timeList.append(timeTaken)
+                idList.append(currentMarker)
+                timeSinceList.append(timeSinceLast)
+            
 
-                    timeSince(timeSinceLast)
+                timeSince(timeSinceLast)
 
-                
-                rospy.loginfo(marker.id)
-                rospy.loginfo(timeTaken)
-                rospy.loginfo(idList)
-                
+
+            rospy.loginfo(currentMarker)
+            rospy.loginfo(timeTaken)
+            rospy.loginfo(idList)
+            
 
 def timeSince(timeSinceLast):
 
@@ -193,7 +182,7 @@ def timeSince(timeSinceLast):
     
     rospy.loginfo(timeSinceLast)
 
-    if buffer[-1] > 0: 
+    if currentMarker > 0: 
         
         if timeSinceLast < timeThresholdHigh:
             
