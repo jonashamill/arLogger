@@ -181,6 +181,7 @@ def timeSince(timeSinceLast):
     plastic = 0
 
     rospy.set_param('/max_vel_x', 0.25)
+    rospy.set_param('/min_vel_x', 0.1)
     rospy.set_param('/acc_lim_x', 1.0)
     
     rospy.loginfo(timeSinceLast)
@@ -192,6 +193,7 @@ def timeSince(timeSinceLast):
             plastic = 1
 
             rospy.set_param('/max_vel_x', 0.1)
+            rospy.set_param('/min_vel_x', 0.1)
             rospy.set_param('/acc_lim_x', 1.0)
 
             rospy.loginfo('decreasing speed- log')
@@ -200,6 +202,7 @@ def timeSince(timeSinceLast):
             
             plastic = 2
             rospy.set_param('/max_vel_x', 0.4)
+            rospy.set_param('/min_vel_x', 0.3)
             rospy.set_param('/acc_lim_x', 1.0)
 
             rospy.loginfo('increasing speed - log')
