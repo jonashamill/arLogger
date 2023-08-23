@@ -76,7 +76,7 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'Min Velocity', 'Max Velocity'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'Min Velocity', 'Max Velocity', 'State'])
         
         for i in range(len(idList)):
             writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i],stateList[i]])
