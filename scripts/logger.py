@@ -208,9 +208,9 @@ def timeSince(timeSinceLast):
 
             rospy.loginfo('increasing speed - log')
 
-        else:
+    else:
 
-            plastic = 0
+        plastic = 0
 
     
 
