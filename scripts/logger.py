@@ -172,7 +172,7 @@ def getTag(msg):
             rospy.loginfo(idList)
             
 
-def timeSince(timeSinceLast, plastic):
+def timeSince(timeSinceLast):
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
     timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
