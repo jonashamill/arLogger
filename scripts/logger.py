@@ -185,7 +185,9 @@ def timeSince(timeSinceLast):
     # rospy.set_param('/min_vel_x', 0.1)
     # rospy.set_param('/acc_lim_x', 1.0)
     
-    rospy.loginfo(timeSinceLast)
+    rospy.loginfo('Time since last: %s', str(timeSinceLast))
+
+    plastic = 0
 
     if currentMarker > 0: 
         
@@ -208,11 +210,7 @@ def timeSince(timeSinceLast):
 
             rospy.loginfo('increasing speed - log')
 
-    else:
-
-        plastic = 0
-
-    
+   
 
     # Publish 'plastic' as a ROS topic
     plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
