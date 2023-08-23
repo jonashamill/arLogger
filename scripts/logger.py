@@ -15,6 +15,7 @@ timeList = []
 timeSinceList = []
 minList = []
 maxList = []
+stateList = []
 timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
@@ -78,7 +79,7 @@ def saveCSV():
         writer.writerow(['ID', 'Time', 'Timesince', 'Min Velocity', 'Max Velocity'])
         
         for i in range(len(idList)):
-            writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i]])
+            writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i],stateList[i]])
 
 
 def rosInit():
@@ -123,6 +124,7 @@ def getTag(msg):
     global idList
     global currentMarker
     global timeTaken
+    global stateList
 
     for marker in msg.markers:
         
@@ -162,6 +164,7 @@ def getTag(msg):
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
+                stateList.append(plastic)
             
 
                 timeSince(timeSinceLast)
