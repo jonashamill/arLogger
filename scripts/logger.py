@@ -20,6 +20,8 @@ currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 minVel = 0
+ # Init with base value
+plastic = 0
 
 
 def getTime():
@@ -170,19 +172,18 @@ def getTag(msg):
             rospy.loginfo(idList)
             
 
-def timeSince(timeSinceLast):
+def timeSince(timeSinceLast, plastic):
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
     timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
     timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
-    # Init with base value
-    plastic = 0
+   
 
-    rospy.set_param('/max_vel_x', 0.25)
-    rospy.set_param('/min_vel_x', 0.1)
-    rospy.set_param('/acc_lim_x', 1.0)
+    # rospy.set_param('/max_vel_x', 0.25)
+    # rospy.set_param('/min_vel_x', 0.1)
+    # rospy.set_param('/acc_lim_x', 1.0)
     
     rospy.loginfo(timeSinceLast)
 
@@ -192,20 +193,24 @@ def timeSince(timeSinceLast):
             
             plastic = 1
 
-            rospy.set_param('/max_vel_x', 0.1)
-            rospy.set_param('/min_vel_x', 0.1)
-            rospy.set_param('/acc_lim_x', 1.0)
+            # rospy.set_param('/max_vel_x', 0.1)
+            # rospy.set_param('/min_vel_x', 0.1)
+            # rospy.set_param('/acc_lim_x', 1.0)
 
             rospy.loginfo('decreasing speed- log')
 
         elif timeSinceLast > timeThresholdLow:
             
             plastic = 2
-            rospy.set_param('/max_vel_x', 0.4)
-            rospy.set_param('/min_vel_x', 0.3)
-            rospy.set_param('/acc_lim_x', 1.0)
+            # rospy.set_param('/max_vel_x', 0.4)
+            # rospy.set_param('/min_vel_x', 0.3)
+            # rospy.set_param('/acc_lim_x', 1.0)
 
             rospy.loginfo('increasing speed - log')
+
+        else:
+
+            plastic = 0
 
     
 
