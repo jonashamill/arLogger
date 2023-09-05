@@ -159,6 +159,10 @@ def getTag(msg):
                 #timeSinceLast = round(finish - lastTimestamp.get(marker.id, finish), 5)
                 # lastTimestamp[currentMarker] = finish
 
+                # Publish 'tag' as a ROS topic
+                tagPub = rospy.Publisher('tagTopic', Int32, queue_size=10)
+                tagPub.publish(True)
+
                 minList.append(minVel)
                 maxList.append(maxVel)
                 timeList.append(timeTaken)
