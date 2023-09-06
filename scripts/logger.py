@@ -206,6 +206,7 @@ def timeSince(timeSinceLast):
             # rospy.set_param('/min_vel_x', 0.1)
             # rospy.set_param('/acc_lim_x', 1.0)
 
+
             rospy.loginfo('decreasing speed- log')
 
         elif timeSinceLast > timeThresholdLow:
@@ -215,13 +216,15 @@ def timeSince(timeSinceLast):
             # rospy.set_param('/min_vel_x', 0.3)
             # rospy.set_param('/acc_lim_x', 1.0)
 
+
+
             rospy.loginfo('increasing speed - log')
 
    
 
-    # Publish 'plastic' as a ROS topic
-    plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
-    plasticPub.publish(plastic)
+        # Publish 'plastic' as a ROS topic
+        plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
+        plasticPub.publish(plastic)
     
 
 
