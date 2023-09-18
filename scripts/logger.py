@@ -20,7 +20,7 @@ timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
-minVel = 0
+
  # Init with base value
 plastic = 0
 
@@ -31,12 +31,15 @@ def getTime():
     dateTime = datetime.now()
     dtString = dateTime.strftime("%Y%m%d%H%M%S") #ISO 8601 Standard
 
-    return dtString
+    rosTime = rospy.Time.now()
 
+    return dtString, rosTime
+
+_, rosTimeNow = getTime()
 
 def getPath():
 
-    timenow = getTime()
+    timenow, _ = getTime()
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
@@ -76,9 +79,9 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'Min Velocity', 'Max Velocity', 'State'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Max Velocity', 'State'])
         
-        for i in range(len(idList)):
+        for i in range(len(stateList)):
             writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i],stateList[i]])
 
 
@@ -163,12 +166,15 @@ def getTag(msg):
                 tagPub = rospy.Publisher('tagTopic', Int32, queue_size=10)
                 tagPub.publish(True)
 
-                minList.append(minVel)
+                _, rosTimeNow = getTime()
+
+
+                minList.append(rosTimeNow)
                 maxList.append(maxVel)
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
-                stateList.append(plastic)
+                
             
 
                 timeSince(timeSinceLast)
@@ -221,6 +227,13 @@ def timeSince(timeSinceLast):
             rospy.loginfo('increasing speed - log')
 
    
+        stateList.append(plastic)
+
+        _, rosTimeNow = getTime()
+
+
+        minList.append(rosTimeNow)
+
 
         # Publish 'plastic' as a ROS topic
         plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
