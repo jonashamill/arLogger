@@ -24,6 +24,18 @@ maxVel = 0
  # Init with base value
 plastic = 0
 
+def rosInit():
+
+    rospy.init_node("arLogger")
+
+
+    ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
+
+    # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
+    # rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
+
+    
+    rospy.on_shutdown(saveCSV)
 
 def getTime():
 
@@ -85,18 +97,7 @@ def saveCSV():
             writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i],stateList[i]])
 
 
-def rosInit():
 
-    rospy.init_node("arLogger")
-
-
-    ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
-
-    # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
-    # rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
-
-    
-    rospy.on_shutdown(saveCSV)
 
 
 def checkDuplicate(iterable,check):
@@ -243,8 +244,10 @@ def timeSince(timeSinceLast):
 
 
 
+
 if __name__ == '__main__':
-    makeFolder()
     rosInit()
+    makeFolder()
+    
 
     rospy.spin()
