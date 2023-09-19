@@ -4,7 +4,7 @@
   <arg name="cam_image_topic" default="camera/image_raw" />
   <arg name="cam_info_topic" default="camera/camera_info" />
 
-  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect 2> >(grep -v TF_REPEATED_DATA buffer_core)" output="screen">
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
 
     <param name="log_level" value="error" />
 
