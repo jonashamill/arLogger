@@ -147,7 +147,7 @@ def getTag(msg):
             
             
 
-            if checkDuplicate(idList, currentMarker) == True:
+            if checkDuplicate(idList, currentMarker) == True or currentMarker > 19:
                 continue
             else:
 
