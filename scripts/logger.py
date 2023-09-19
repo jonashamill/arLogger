@@ -43,7 +43,11 @@ def getTime():
     dateTime = datetime.now()
     dtString = dateTime.strftime("%Y%m%d%H%M%S") #ISO 8601 Standard
 
-    rosTime = rospy.Time.now()
+    rosTimeUnf = rospy.Time.now()
+
+    rosCorrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
+
+    rosTime = rosCorrentTime.strftime("%Y%m%d%H%M%S")
 
     return dtString, rosTime
 
