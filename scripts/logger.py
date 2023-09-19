@@ -149,6 +149,11 @@ def getTag(msg):
 
             if checkDuplicate(idList, currentMarker) == True or currentMarker > 19:
                 continue
+            
+            elif currentMarker < 19 and currentMarker > 25:
+
+                rospy.loginfo('I SEE A ROBOT WITH ID: ' + str(currentMarker) )
+
             else:
 
                 if len(timeList) > 0:
