@@ -5,7 +5,7 @@
   <arg name="cam_info_topic" default="camera/camera_info" />
 
 
-  <rosparam command="set" param="/tf2/buffer/warnings" value="{TF_REPEATED_DATA: 0}"/>
+  <param name="/tf2/buffer/warnings/TF_REPEATED_DATA" value="0"/>
 
 
   <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
