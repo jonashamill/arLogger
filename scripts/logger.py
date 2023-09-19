@@ -47,7 +47,7 @@ def getTime():
 
     rosCorrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
 
-    rosTime = rosCorrentTime.strftime("%Y%m%d%H%M%S")
+    rosTime = rosCorrentTime.strftime("%H:%M: %S")
 
     return dtString, rosTime
 
