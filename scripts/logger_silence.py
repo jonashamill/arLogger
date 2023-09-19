@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import subprocess
 
 # Define the command as a list of arguments
