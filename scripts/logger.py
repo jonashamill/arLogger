@@ -9,6 +9,16 @@ import time
 import os
 from std_msgs.msg import Int32, Float32
 
+import warnings
+
+# Define a filter function to suppress specific warnings
+def filter_warnings(message, category, filename, lineno, file=None, line=None):
+    if "TF_REPEATED_DATA" in str(message):
+        return None  # Suppress this warning
+
+# Attach the filter function to the warnings module
+warnings.showwarning = filter_warnings
+
 #Global vars
 idList = []
 timeList = []
