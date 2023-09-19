@@ -26,6 +26,8 @@ plastic = 0
 
 def rosInit():
 
+    rospy.init_node()
+
     rospy.init_node("arLogger")
 
 
