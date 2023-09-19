@@ -6,7 +6,7 @@
 
   <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
 
-    <param name="log_level" value="error" />
+    <env name="ROSCONSOLE_STDOUT_LINE_BUFFERED" value="1"/>
 
     <rosparam command="load" file="$(find leo_example_follow_ar_tag)/config/alvar.yaml" />
 
@@ -15,7 +15,7 @@
   </node>
 
   <node name="arLogger" pkg="arLogger" type="logger.py" output="screen">
-    <param name="log_level" value="error" />
+    
   </node>
 
 </launch>
