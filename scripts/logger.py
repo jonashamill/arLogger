@@ -214,7 +214,7 @@ def timeSince(timeSinceLast):
             # rospy.set_param('/acc_lim_x', 1.0)
 
 
-            rospy.loginfo('decreasing speed- log')
+            rospy.loginfo('Patrol Mode')
 
         elif timeSinceLast > timeThresholdLow:
             
@@ -225,7 +225,7 @@ def timeSince(timeSinceLast):
 
 
 
-            rospy.loginfo('increasing speed - log')
+            rospy.loginfo('Explore Mode')
 
    
         stateList.append(plastic)
