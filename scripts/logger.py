@@ -26,8 +26,6 @@ plastic = 0
 
 def rosInit():
 
-    rospy.init_node()
-
     rospy.init_node("arLogger")
 
 
@@ -49,7 +47,6 @@ def getTime():
 
     return dtString, rosTime
 
-_, rosTimeNow = getTime()
 
 def getPath():
 
