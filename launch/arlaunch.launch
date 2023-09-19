@@ -4,9 +4,11 @@
   <arg name="cam_image_topic" default="camera/image_raw" />
   <arg name="cam_info_topic" default="camera/camera_info" />
 
-  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
 
-    <env name="ROSCONSOLE_STDOUT_LINE_BUFFERED" value="1"/>
+  <rosparam command="set" param="/tf2/buffer/warnings" value="{TF_REPEATED_DATA: 0}"/>
+
+
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
 
     <rosparam command="load" file="$(find leo_example_follow_ar_tag)/config/alvar.yaml" />
 
