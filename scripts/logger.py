@@ -202,9 +202,9 @@ def getTag(msg):
                 timeSince(timeSinceLast)
 
 
-            rospy.loginfo(currentMarker)
-            rospy.loginfo(timeTaken)
-            rospy.loginfo(idList)
+            rospy.loginfo("ID: " + str(currentMarker))
+            rospy.loginfo("Time Taken: " + str(timeTaken))
+            rospy.loginfo("id List: " + str(idList))
             
 
 def timeSince(timeSinceLast):
