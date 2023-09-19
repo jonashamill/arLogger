@@ -4,7 +4,9 @@
   <arg name="cam_image_topic" default="camera/image_raw" />
   <arg name="cam_info_topic" default="camera/camera_info" />
 
-  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect 2> >(grep -v TF_REPEATED_DATA buffer_core)" output="screen">
+
+    <param name="log_level" value="error" />
 
     <rosparam command="load" file="$(find leo_example_follow_ar_tag)/config/alvar.yaml" />
 
@@ -12,8 +14,9 @@
     <remap from="camera_info" to="$(arg cam_info_topic)" />
   </node>
 
-  <node name="arLogger" pkg="arLogger" type="logger.py" output="screen"/>
-
+  <node name="arLogger" pkg="arLogger" type="logger.py" output="screen">
+    <param name="log_level" value="error" />
+  </node>
 
 </launch>
  
