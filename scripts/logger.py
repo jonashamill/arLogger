@@ -211,12 +211,8 @@ def timeSince(timeSinceLast):
     timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
+    global beHave
    
-
-    # rospy.set_param('/max_vel_x', 0.25)
-    # rospy.set_param('/min_vel_x', 0.1)
-    # rospy.set_param('/acc_lim_x', 1.0)
-    
     rospy.loginfo('Time since last: %s', str(timeSinceLast))
 
 
@@ -224,21 +220,19 @@ def timeSince(timeSinceLast):
         
         if timeSinceLast < timeThresholdHigh:
 
-            beHave =+ 1
+            beHave += 1
 
-
-
-            rospy.loginfo('Patrol Mode')
 
         elif timeSinceLast > timeThresholdLow:
 
 
-            beHave =- 1
+            beHave -= 1
  
+
+         # Ensure beHave stays within a reasonable range (e.g., between 0 and 100)
+        beHave = max(0, min(100, beHave))
             
-
-
-        
+       
     
 
 def beHaveFun():
@@ -246,7 +240,7 @@ def beHaveFun():
     global plastic
     global beHave
 
-    ranDomNo = random.randrange(0,100)
+    ranDomNo = random.randrange(1,101)
 
     if beHave > ranDomNo:
 
