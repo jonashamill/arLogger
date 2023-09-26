@@ -8,6 +8,8 @@ from datetime import datetime
 import time
 import os
 from std_msgs.msg import Int32, Float32
+import random
+import threading
 
 
 #Global vars
@@ -21,6 +23,10 @@ timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
+
+
+beHave = 50
+
 
  # Init with base value
 plastic = 0
@@ -213,53 +219,66 @@ def timeSince(timeSinceLast):
     
     rospy.loginfo('Time since last: %s', str(timeSinceLast))
 
-    plastic = 0
 
     if currentMarker > 0: 
         
         if timeSinceLast < timeThresholdHigh:
-            
-            plastic = 1
 
-            # rospy.set_param('/max_vel_x', 0.1)
-            # rospy.set_param('/min_vel_x', 0.1)
-            # rospy.set_param('/acc_lim_x', 1.0)
+            beHave =+ 1
+
 
 
             rospy.loginfo('Patrol Mode')
 
         elif timeSinceLast > timeThresholdLow:
+
+
+            beHave =- 1
+ 
             
-            plastic = 2
-            # rospy.set_param('/max_vel_x', 0.4)
-            # rospy.set_param('/min_vel_x', 0.3)
-            # rospy.set_param('/acc_lim_x', 1.0)
 
 
-
-            rospy.loginfo('Explore Mode')
-
-   
-        stateList.append(plastic)
-
-        _, rosTimeNow = getTime()
-
-
-        minList.append(rosTimeNow)
-
-
-        # Publish 'plastic' as a ROS topic
-        plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
-        plasticPub.publish(plastic)
+        
     
 
+def beHaveFun():
+
+    global plastic
+    global beHave
+
+    ranDomNo = random.randrange(0,100)
+
+    if beHave > ranDomNo:
+
+        plastic = 1
+
+        rospy.loginfo('Patrol Mode')
 
 
+    else:
+        
+        plastic = 2
+    
+        rospy.loginfo('Explore Mode')
 
+    stateList.append(plastic)
+
+    _, rosTimeNow = getTime()
+
+
+    minList.append(rosTimeNow)
+
+
+    # Publish 'plastic' as a ROS topic
+    plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
+    plasticPub.publish(plastic)
 
 if __name__ == '__main__':
     rosInit()
     makeFolder()
     
+    plastic_thread = threading.Thread(target=beHaveFun)
+    plastic_thread.daemon = True  # This makes the thread exit when the main program exits
+    plastic_thread.start()  # Start the thread
 
     rospy.spin()
