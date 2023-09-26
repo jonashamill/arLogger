@@ -102,7 +102,7 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Behave Val', 'Random No' 'State'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Behave Val', 'Random No', 'State'])
         
         for i in range(len(stateList)):
             writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], beHaveList[i],ranNoList[i],stateList[i]])
