@@ -236,7 +236,7 @@ def beHaveFun():
         
         ranDomNo = random.randrange(1,101)
 
-        rospy.loginfo('behave: ' + beHave + ' random: ' + ranDomNo)
+        rospy.loginfo('behave: ' + str(beHave) + ' random: ' + str(ranDomNo))
 
 
         if beHave > ranDomNo:
