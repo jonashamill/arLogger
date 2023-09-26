@@ -203,13 +203,13 @@ def timeSince(timeSinceLast):
         
         if timeSinceLast < timeThresholdHigh:
 
-            beHave += 1
+            beHave += 5
 
 
         elif timeSinceLast > timeThresholdLow:
 
 
-            beHave -= 1
+            beHave -= 5
  
 
          # Ensure beHave stays within a reasonable range (e.g., between 0 and 100)
