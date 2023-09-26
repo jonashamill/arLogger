@@ -15,8 +15,9 @@ import threading
 idList = []
 timeList = []
 timeSinceList = []
-minList = []
-maxList = []
+rosTimeList = []
+ranNoList = []
+beHaveList = []
 stateList = []
 timeTaken = 0
 currentMarker = 999
@@ -25,6 +26,7 @@ maxVel = 0
 
 
 beHave = 50
+ranDomNo = 50
 
 
  # Init with base value
@@ -100,10 +102,10 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'beHave Val', 'State'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Behave Val', 'Random No' 'State'])
         
         for i in range(len(stateList)):
-            writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i],stateList[i]])
+            writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], beHaveList[i],ranNoList[i],stateList[i]])
 
 
 
@@ -122,6 +124,9 @@ def getTag(msg):
     global currentMarker
     global timeTaken
     global stateList
+    global ranDomNo
+    global beHave
+
 
     for marker in msg.markers:
         
@@ -171,8 +176,9 @@ def getTag(msg):
                 _, rosTimeNow = getTime()
 
 
-                minList.append(rosTimeNow)
-                maxList.append(maxVel)
+                rosTimeList.append(rosTimeNow)
+                beHaveList.append(beHave)
+                ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
@@ -220,7 +226,7 @@ def timeSince(timeSinceLast):
         _, rosTimeNow = getTime()
 
 
-        minList.append(rosTimeNow)
+        rosTimeList.append(rosTimeNow)
             
        
     
@@ -229,6 +235,7 @@ def beHaveFun():
 
     global plastic
     global beHave
+    global ranDomNo
 
     
 
