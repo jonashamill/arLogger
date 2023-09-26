@@ -9,7 +9,7 @@ import time
 import os
 from std_msgs.msg import Int32, Float32
 import random
-
+import threading
 
 #Global vars
 idList = []
@@ -258,5 +258,9 @@ def beHaveFun():
 if __name__ == '__main__':
     rosInit()
     makeFolder()
+
+    plastic_thread = threading.Thread(target=beHaveFun)
+    plastic_thread.daemon = True  # This makes the thread exit when the main program exits
+    plastic_thread.start()  # Start the thread
     
     rospy.spin()
