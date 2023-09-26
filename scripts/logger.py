@@ -236,9 +236,13 @@ def beHaveFun():
         
         ranDomNo = random.randrange(1,101)
 
+        rospy.loginfo('behave: ' + beHave + ' random: ' + ranDomNo)
+
+
         if beHave > ranDomNo:
 
             plastic = 1
+
 
             rospy.loginfo('Patrol Mode')
 
@@ -248,8 +252,6 @@ def beHaveFun():
             plastic = 2
         
             rospy.loginfo('Explore Mode')
-
-
 
 
 
