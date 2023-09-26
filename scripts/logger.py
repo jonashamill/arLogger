@@ -101,7 +101,7 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Max Velocity', 'State'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'beHave Val', 'State'])
         
         for i in range(len(stateList)):
             writer.writerow([idList[i], timeList[i], timeSinceList[i], minList[i], maxList[i],stateList[i]])
@@ -114,22 +114,6 @@ def checkDuplicate(iterable,check):
     for i in iterable:
         if i == check:
             return True
-
-
-# def maxVelocityCallback(msg):
-
-#     global maxVel
-
-#     maxVel = msg.data
-
-
-
-# def minVelocityCallback(msg):
-
-#     global minVel
-
-#     minVel = msg.data
-
 
 
 
@@ -230,7 +214,14 @@ def timeSince(timeSinceLast):
  
 
          # Ensure beHave stays within a reasonable range (e.g., between 0 and 100)
-        beHave = max(0, min(100, beHave))
+        beHave = max(1, min(100, beHave))
+
+        stateList.append(plastic)
+
+        _, rosTimeNow = getTime()
+
+
+        minList.append(rosTimeNow)
             
        
     
@@ -255,12 +246,6 @@ def beHaveFun():
     
         rospy.loginfo('Explore Mode')
 
-    stateList.append(plastic)
-
-    _, rosTimeNow = getTime()
-
-
-    minList.append(rosTimeNow)
 
 
     # Publish 'plastic' as a ROS topic
