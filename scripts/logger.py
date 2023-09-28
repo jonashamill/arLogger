@@ -130,7 +130,7 @@ def makeFolder():
 
 def saveCSV():
     
-    _, filename = getPath()
+    _, filename, _ = getPath()
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
