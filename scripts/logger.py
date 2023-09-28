@@ -7,7 +7,7 @@ import rospkg
 from datetime import datetime
 import time
 import os
-from std_msgs.msg import Int32, Float32
+from std_msgs.msg import Int32
 import random
 import threading
 
@@ -55,9 +55,9 @@ def getTime():
 
     rosTimeUnf = rospy.Time.now()
 
-    rosCorrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
+    rosCurrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
 
-    rosTime = rosCorrentTime.strftime("%H:%M: %S")
+    rosTime = rosCurrentTime.strftime("%H:%M: %S")
 
     return dtString, rosTime
 
@@ -92,10 +92,10 @@ def makeFolder():
 
     # test folder permisions and make log folder
     try:
-        testFile = open(os.path.join(path, 'test.txt'), 'w+')
+        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(path)
+            os.mkdir(logFolder)
 
             print ("Log folder created")
 
@@ -110,10 +110,10 @@ def makeFolder():
 
     # test folder permisions and make sub-log folder
     try:
-        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
+        testFile = open(os.path.join(path, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(logFolder)
+            os.mkdir(path)
 
             print ("Log folder created")
 

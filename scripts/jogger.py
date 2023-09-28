@@ -10,7 +10,7 @@ import os
 import time
 
 
-start = time.perf_counter()
+startTime = time.perf_counter()
 
 
 def getTime():
@@ -21,9 +21,9 @@ def getTime():
 
     rosTimeUnf = rospy.Time.now()
 
-    rosCorrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
+    rosCurrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
 
-    rosTime = rosCorrentTime.strftime("%H:%M: %S")
+    rosTime = rosCurrentTime.strftime("%H:%M: %S")
 
     return dtString, rosTime
 
@@ -44,27 +44,31 @@ def getPath():
 
     velPath = os.path.join(logFolder, folderName + "vel")
     posePath = os.path.join(logFolder,folderName + "pose")
-    batteryPath = os.path.join(logFolder,folderName + "pose")
+    batPath = os.path.join(logFolder,folderName + "pose")
 
 
-    fullpath = os.path.join(path, timenow + "_arlog.csv")
+    velFullpath = os.path.join(velPath, timenow + "_vellog.csv")
+    poseFullpath = os.path.join(posePath, timenow + "_poselog.csv")
+    batFullpath = os.path.join(batPath, timenow + "_batlog.csv")
 
-    print (fullpath)
+    print (velFullpath)
+    print(poseFullpath)
+    print(batFullpath)
 
-    return path, fullpath, logFolder
+    return logFolder, velPath, velFullpath, posePath, poseFullpath, batPath, batFullpath
 
 def makeFolder():
 
-    path, _ , logFolder= getPath()
+    logFolder, velPath, _, posePath, _, batPath, _= getPath()
 
     testFile = None
 
     # test folder permisions and makes log folder
     try:
-        testFile = open(os.path.join(path, 'test.txt'), 'w+')
+        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(path)
+            os.mkdir(logFolder)
 
             print ("Log folder created")
 
@@ -75,35 +79,92 @@ def makeFolder():
     testFile.close()
     os.remove(testFile.name)
 
-    testFile = None
 
     # test folder permisions and makes vel folder
     try:
-        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
+        testFile = open(os.path.join(velPath, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(path)
+            os.mkdir(velPath)
 
-            print ("Log folder created")
+            print ("Vel folder created")
 
             testFile.close()
             os.remove(testFile.name)
 
         except OSError:
-            print("No log sub-folder created")
+            print("No vel sub-folder created")
     
     testFile.close()
     os.remove(testFile.name)
     
 
+    # test folder permisions and makes vel folder
+    try:
+        testFile = open(os.path.join(posePath, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(posePath)
 
-def saveCSV():
+            print ("Vel folder created")
+
+            testFile.close()
+            os.remove(testFile.name)
+
+        except OSError:
+            print("No vel sub-folder created")
     
-    _, filename, _ = getPath()
+    testFile.close()
+    os.remove(testFile.name)
+
+    # test folder permisions and makes vel folder
+    try:
+        testFile = open(os.path.join(batPath, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(batPath)
+
+            print ("Vel folder created")
+
+            testFile.close()
+            os.remove(testFile.name)
+
+        except OSError:
+            print("No vel sub-folder created")
+    
+    testFile.close()
+    os.remove(testFile.name)
+
+
+
+def velCallback(msg):
+
+    global startTime
+
+    finishTime = time.perf_counter()
+
+    timeStamp = round(finishTime-startTime, 2)
+
+
+    _, velPath, _, _, _, _, _ = getPath()
+
+
+    lin_x = msg.linear.x
+    ang_z = msg.angular.x
+    _, timeNow = getTime()
+    
+    velData = [timeNow, timeStamp, lin_x, ang_z]
+
+    velHeaders =" 'Ros Time', 'Time Stamp', 'Linear Velocity', 'Angular Velocity' "
+
+    saveCSV(velPath, velData, velHeaders)
+    
+
+
+def saveCSV(filename, data, headers):
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Behave Val', 'Random No', 'State'])
+        writer.writerow([headers])
         
-        for i in range(len(stateList)):
-            writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], beHaveList[i],ranNoList[i],stateList[i]])
+        writer.writerow([data])
