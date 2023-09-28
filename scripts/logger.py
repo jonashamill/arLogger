@@ -90,7 +90,7 @@ def makeFolder():
 
     testFile = None
 
-    # test folder permisions
+    # test folder permisions and make log folder
     try:
         testFile = open(os.path.join(path, 'test.txt'), 'w+')
     except IOError:
@@ -108,12 +108,12 @@ def makeFolder():
 
     testFile = None
 
-    # test folder permisions
+    # test folder permisions and make sub-log folder
     try:
         testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(path)
+            os.mkdir(logFolder)
 
             print ("Log folder created")
 
