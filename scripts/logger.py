@@ -24,6 +24,8 @@ currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 
+idListBuffer = []
+
 
 beHave = 50
 ranDomNo = 50
@@ -180,9 +182,13 @@ def getTag(msg):
                 beHaveList.append(beHave)
                 ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
-                idList.append(currentMarker)
+                idListBuffer.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
-                
+
+
+                if len(idListBuffer) > 10:
+                    idList.append(idList)
+                    idListBuffer = []
             
 
                 timeSince(timeSinceLast)
