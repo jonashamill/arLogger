@@ -187,6 +187,23 @@ def poseCallback(msg):
     saveCSV(posePath, poseData, poseHeaders)
 
 
+def batCallback(msg):
+
+    global startTime
+
+    finishTime = time.perf_counter()
+
+    timeStamp = round(finishTime-startTime, 2)
+
+    _, _, _, _, _, batPath, _ = getPath()
+
+    _, timeNow = getTime()
+
+    batData = [timeNow, timeStamp, msg.data]
+
+    batHeaders = " 'Ros Time', 'Time Stamp', 'Battery Level' "
+
+    saveCSV(batPath, batData, batHeaders)
 
 
 def saveCSV(filename, data, headers):
@@ -194,5 +211,4 @@ def saveCSV(filename, data, headers):
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow([headers])
-        
         writer.writerow([data])
