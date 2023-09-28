@@ -160,6 +160,34 @@ def velCallback(msg):
     saveCSV(velPath, velData, velHeaders)
     
 
+def poseCallback(msg):
+
+    global startTime
+
+    finishTime = time.perf_counter()
+
+    timeStamp = round(finishTime-startTime, 2)
+
+
+    _, _, _, posePath, _, _, _ = getPath()
+
+    x = msg.pose.pose.position.x
+    y = msg.pose.pose.position.y
+    ox = msg.pose.pose.orientation.x
+    oy = msg.pose.pose.orientation.y
+    oz = msg.pose.pose.orientation.z
+    ow = msg.pose.pose.orientation.w
+
+    _, timeNow = getTime()
+
+    poseData = [timeNow, timeStamp, x, y, ox, oy, oz, ow]
+
+    poseHeaders = " 'Ros Time', 'Time Stamp', 'x', 'y', 'ox', 'oy', 'oz', 'ow' "
+
+    saveCSV(posePath, poseData, poseHeaders)
+
+
+
 
 def saveCSV(filename, data, headers):
 
