@@ -66,7 +66,7 @@ def getPath():
 
     timenow, _ = getTime()
 
-    dateFormat = "%d%m"
+    dateFormat = "%m%d"
     dateStr = timenow.strftime(dateFormat)
 
     rp = rospkg.RosPack()
