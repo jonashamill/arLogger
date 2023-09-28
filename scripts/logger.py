@@ -66,20 +66,27 @@ def getPath():
 
     timenow, _ = getTime()
 
+    dateFormat = "%d%m"
+    dateStr = timenow.strftime(dateFormat)
+
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    path = os.path.join(packagePath, "logs")
+    logFolder = os.path.join(packagePath, "logs")
+    folderName = dateStr
+
+
+    path = os.path.join(logFolder, folderName)
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
     print (fullpath)
 
-    return path, fullpath
+    return path, fullpath, logFolder
 
 def makeFolder():
 
-    path, _ = getPath()
+    path, _ , logFolder= getPath()
 
     testFile = None
 
@@ -89,13 +96,36 @@ def makeFolder():
     except IOError:
         try:
             os.mkdir(path)
+
+            print ("Log folder created")
+
         except OSError:
             print("No log folder created")
-        else:
-            print("Log folder created")
+
 
     testFile.close()
     os.remove(testFile.name)
+
+    testFile = None
+
+    # test folder permisions
+    try:
+        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(path)
+
+            print ("Log folder created")
+
+            testFile.close()
+            os.remove(testFile.name)
+
+        except OSError:
+            print("No log sub-folder created")
+    
+    testFile.close()
+    os.remove(testFile.name)
+    
 
 
 def saveCSV():
@@ -187,7 +217,7 @@ def getTag(msg):
 
 
                 if len(idListBuffer) > 10:
-                    idList.append(idList)
+                    idList.extend(idListBuffer)
                     idListBuffer = []
             
 
