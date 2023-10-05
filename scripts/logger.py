@@ -40,7 +40,6 @@ def rosInit():
     rospy.init_node("arLogger")
 
 
-
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
     # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
@@ -76,7 +75,7 @@ def getPath():
     logFolder = os.path.join(packagePath, "logs")
     folderName = dateStr
 
-    path = os.path.join(logFolder, folderName)
+    path = os.path.join(logFolder)
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
@@ -136,7 +135,7 @@ def saveCSV():
     
     _, filename, _ = getPath()
 
-    makeFolder()
+    # makeFolder()
 
 
     idList.extend(idListBuffer) #adds whatever is left in buffer to idList
