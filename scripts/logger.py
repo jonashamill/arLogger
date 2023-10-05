@@ -105,6 +105,20 @@ def makeFolder():
     testFile.close()
     os.remove(testFile.name)
 
+    # test folder permisions
+    try:
+        testFile = open(os.path.join(path, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(path)
+        except OSError:
+            print("No log folder created")
+        else:
+            print("Log folder created")
+
+    testFile.close()
+    os.remove(testFile.name)
+
 
 def saveCSV():
     
