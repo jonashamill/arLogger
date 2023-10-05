@@ -60,12 +60,14 @@ def getTime():
 
     rosTime = rosCorrentTime.strftime("%H:%M: %S")
 
-    return dtString, rosTime
+    dateStr = dateTime.strftime("m%d")
+
+    return dtString, rosTime, dateStr
 
 
 def getPath():
 
-    timenow, _ = getTime()
+    timenow, _, _ = getTime()
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')

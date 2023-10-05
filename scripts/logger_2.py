@@ -59,15 +59,14 @@ def getTime():
 
     rosTime = rosCurrentTime.strftime("%H:%M: %S")
 
-    return dtString, rosTime
+    dateStr = dateTime.strftime("m%d")
+
+    return dtString, rosTime, dateStr
 
 
 def getPath():
 
-    timenow, _ = getTime()
-
-    dateFormat = "%m%d"
-    dateStr = timenow.strftime(dateFormat)
+    timenow, _, dateStr = getTime()
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
@@ -206,23 +205,22 @@ def getTag(msg):
                 tagPub = rospy.Publisher('tagTopic', Int32, queue_size=10)
                 tagPub.publish(True)
 
-                _, rosTimeNow = getTime()
+                _, rosTimeNow, _ = getTime()
 
 
                 rosTimeList.append(rosTimeNow)
                 beHaveList.append(beHave)
                 ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
+                
                 idListBuffer.append(currentMarker)
-                timeSinceList.append(timeSinceLast)
 
-
-                if len(idListBuffer) > 10:
+                if len(idListBuffer) > 5: #this will be replaced with time
                     idList.extend(idListBuffer)
-                    idListBuffer = []
-            
-
-                timeSince(timeSinceLast)
+                    idListBuffer =[]
+                
+                
+                timeSinceList.append(timeSinceLast)
 
 
             rospy.loginfo("ID: " + str(currentMarker))
@@ -262,7 +260,7 @@ def timeSince(timeSinceLast):
 
         stateList.append(plastic)
 
-        _, rosTimeNow = getTime()
+        _, rosTimeNow, _ = getTime()
 
 
         rosTimeList.append(rosTimeNow)
