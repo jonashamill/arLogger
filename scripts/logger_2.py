@@ -7,7 +7,7 @@ import rospkg
 from datetime import datetime
 import time
 import os
-from std_msgs.msg import Int32, Float32
+from std_msgs.msg import Int32
 import random
 import threading
 
@@ -23,6 +23,10 @@ timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
+
+idList = []
+
+idListBuffer = []
 
 
 beHave = 50
@@ -53,9 +57,9 @@ def getTime():
 
     rosTimeUnf = rospy.Time.now()
 
-    rosCorrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
+    rosCurrentTime = datetime.fromtimestamp(rosTimeUnf.to_sec())
 
-    rosTime = rosCorrentTime.strftime("%H:%M: %S")
+    rosTime = rosCurrentTime.strftime("%H:%M: %S")
 
     return dtString, rosTime
 
@@ -64,41 +68,71 @@ def getPath():
 
     timenow, _ = getTime()
 
+    dateFormat = "%m%d"
+    dateStr = timenow.strftime(dateFormat)
+
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    path = os.path.join(packagePath, "logs")
+    logFolder = os.path.join(packagePath, "logs")
+    folderName = dateStr
+
+
+    path = os.path.join(logFolder, folderName)
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
     print (fullpath)
 
-    return path, fullpath
+    return path, fullpath, logFolder
 
 def makeFolder():
 
-    path, _ = getPath()
+    path, _ ,logFolder= getPath()
 
     testFile = None
 
-    # test folder permisions
+    # test folder permisions and make log folder
+    try:
+        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(logFolder)
+
+            print ("Log folder created")
+
+        except OSError:
+            print("No log folder created")
+
+
+    testFile.close()
+    os.remove(testFile.name)
+
+    # testFile = None
+
+    # test folder permisions and make sub-log folder
     try:
         testFile = open(os.path.join(path, 'test.txt'), 'w+')
     except IOError:
         try:
             os.mkdir(path)
-        except OSError:
-            print("No log folder created")
-        else:
-            print("Log folder created")
 
+            print ("Log folder created")
+
+            testFile.close()
+            os.remove(testFile.name)
+
+        except OSError:
+            print("No log sub-folder created")
+    
     testFile.close()
     os.remove(testFile.name)
+    
 
 
 def saveCSV():
     
-    _, filename = getPath()
+    _, filename, _ = getPath()
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
@@ -182,7 +216,11 @@ def getTag(msg):
                 timeList.append(timeTaken)
                 idList.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
-                
+
+
+                # if len(idListBuffer) > 10:
+                #     idList.extend(idListBuffer)
+                #     idListBuffer = []
             
 
                 timeSince(timeSinceLast)
