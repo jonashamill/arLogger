@@ -67,22 +67,25 @@ def getTime():
 
 def getPath():
 
-    timenow, _, _ = getTime()
+    timenow, _, dateStr = getTime()
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    path = os.path.join(packagePath, "logs")
+    logFolder = os.path.join(packagePath, "logs")
+    folderName = dateStr
+
+    path = os.path.join(logFolder, folderName, "logs")
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
     print (fullpath)
 
-    return path, fullpath
+    return path, fullpath, logFolder
 
 def makeFolder():
 
-    path, _ = getPath()
+    path, _, logFolder = getPath()
 
     testFile = None
 
@@ -103,7 +106,9 @@ def makeFolder():
 
 def saveCSV():
     
-    _, filename = getPath()
+    _, filename, _ = getPath()
+
+    idList.extend(idListBuffer) #adds whatever is left in buffer to idList
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
