@@ -79,6 +79,8 @@ def getPath():
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
+    print(logFolder)
+
     print(path)
 
     print (fullpath)
@@ -90,7 +92,7 @@ def makeFolder():
     path, _, logFolder = getPath()
 
     try:
-        os.mkdir(logFolder)
+        os.mkdir(path)
     except OSError:
         print("No log folder created")
     else:
