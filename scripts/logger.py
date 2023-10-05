@@ -24,6 +24,8 @@ currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 
+idList = []
+
 idListBuffer = []
 
 
