@@ -24,8 +24,6 @@ currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 
-idList = []
-
 idListBuffer = []
 
 
@@ -160,6 +158,7 @@ def getTag(msg):
     global stateList
     global ranDomNo
     global beHave
+    global idListBuffer
 
 
     for marker in msg.markers:
@@ -176,7 +175,7 @@ def getTag(msg):
             
             
 
-            if checkDuplicate(idList, currentMarker) or currentMarker > 19:
+            if checkDuplicate(idListBuffer, currentMarker) or currentMarker > 19:
             
                 if 19 < currentMarker < 25:
 
@@ -214,13 +213,13 @@ def getTag(msg):
                 beHaveList.append(beHave)
                 ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
-                idList.append(currentMarker)
+                idListBuffer.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
 
 
-                # if len(idListBuffer) > 10:
-                #     idList.extend(idListBuffer)
-                #     idListBuffer = []
+                if len(idListBuffer) > 10:
+                    idList.extend(idListBuffer)
+                    idListBuffer = []
             
 
                 timeSince(timeSinceLast)
@@ -229,6 +228,8 @@ def getTag(msg):
             rospy.loginfo("ID: " + str(currentMarker))
             rospy.loginfo("Time Taken: " + str(timeTaken))
             rospy.loginfo("id List: " + str(idList))
+            rospy.loginfo("id Buffer: " + str(idListBuffer))
+            
             
 
 def timeSince(timeSinceLast):

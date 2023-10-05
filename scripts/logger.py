@@ -13,6 +13,9 @@ import threading
 
 #Global vars
 idList = []
+idListBuffer = []
+
+
 timeList = []
 timeSinceList = []
 rosTimeList = []
@@ -180,7 +183,14 @@ def getTag(msg):
                 beHaveList.append(beHave)
                 ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
-                idList.append(currentMarker)
+                
+                idListBuffer.append(currentMarker)
+
+                if len(idListBuffer) > 10:
+                    idList.extend(idListBuffer)
+                    idListBuffer =[]
+                
+                
                 timeSinceList.append(timeSinceLast)
                 
             
