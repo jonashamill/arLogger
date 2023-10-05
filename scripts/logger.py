@@ -187,7 +187,7 @@ def getTag(msg):
                 
                 idListBuffer.append(currentMarker)
 
-                if len(idListBuffer) > 10:
+                if len(idListBuffer) > 5: #this will be replaced with time
                     idList.extend(idListBuffer)
                     idListBuffer =[]
                 
