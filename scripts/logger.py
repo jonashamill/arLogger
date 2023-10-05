@@ -39,6 +39,8 @@ def rosInit():
 
     rospy.init_node("arLogger")
 
+    makeFolder()
+
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
@@ -314,7 +316,7 @@ def beHaveFun():
 
 if __name__ == '__main__':
     rosInit()
-    makeFolder()
+    
 
     plastic_thread = threading.Thread(target=beHaveFun)
     plastic_thread.daemon = True  # This makes the thread exit when the main program exits
