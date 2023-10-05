@@ -39,7 +39,6 @@ def rosInit():
 
     rospy.init_node("arLogger")
 
-    makeFolder()
 
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
@@ -99,6 +98,8 @@ def makeFolder():
         print("No log folder created")
     else:
         print("Log folder created")
+    
+    return
 
     # testFile = None
 
@@ -134,6 +135,9 @@ def makeFolder():
 def saveCSV():
     
     _, filename, _ = getPath()
+
+    makeFolder()
+
 
     idList.extend(idListBuffer) #adds whatever is left in buffer to idList
 
