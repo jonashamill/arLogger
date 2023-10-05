@@ -86,7 +86,7 @@ def getPath():
 
 def makeFolder():
 
-    path, _ , logFolder= getPath()
+    path, _ ,logFolder= getPath()
 
     testFile = None
 
@@ -106,7 +106,7 @@ def makeFolder():
     testFile.close()
     os.remove(testFile.name)
 
-    testFile = None
+    # testFile = None
 
     # test folder permisions and make sub-log folder
     try:
@@ -212,13 +212,13 @@ def getTag(msg):
                 beHaveList.append(beHave)
                 ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
-                idListBuffer.append(currentMarker)
+                idList.append(currentMarker)
                 timeSinceList.append(timeSinceLast)
 
 
-                if len(idListBuffer) > 10:
-                    idList.extend(idListBuffer)
-                    idListBuffer = []
+                # if len(idListBuffer) > 10:
+                #     idList.extend(idListBuffer)
+                #     idListBuffer = []
             
 
                 timeSince(timeSinceLast)
