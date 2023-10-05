@@ -60,7 +60,7 @@ def getTime():
 
     rosTime = rosCorrentTime.strftime("%H:%M: %S")
 
-    dateStr = dateTime.strftime("m%d")
+    dateStr = dateTime.strftime("%m%d")
 
     return dtString, rosTime, dateStr
 
@@ -75,7 +75,7 @@ def getPath():
     logFolder = os.path.join(packagePath, "logs")
     folderName = dateStr
 
-    path = os.path.join(logFolder, folderName, "logs")
+    path = os.path.join(logFolder, folderName)
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
