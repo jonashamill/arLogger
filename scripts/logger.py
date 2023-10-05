@@ -79,6 +79,8 @@ def getPath():
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
+    print(path)
+
     print (fullpath)
 
     return path, fullpath, logFolder
@@ -91,10 +93,10 @@ def makeFolder():
 
     # test folder permisions
     try:
-        testFile = open(os.path.join(path, 'test.txt'), 'w+')
+        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(path)
+            os.mkdir(logFolder)
         except OSError:
             print("No log folder created")
         else:
