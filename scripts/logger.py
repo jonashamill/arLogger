@@ -124,6 +124,7 @@ def checkDuplicate(iterable,check):
 def getTag(msg):
 
     global idList
+    global idListBuffer
     global currentMarker
     global timeTaken
     global stateList
@@ -145,9 +146,9 @@ def getTag(msg):
             
             
 
-            if checkDuplicate(idList, currentMarker) or currentMarker > 19:
+            if checkDuplicate(idListBuffer, currentMarker) or currentMarker > 19:
             
-                if 19 < currentMarker < 25:
+                if 19 < currentMarker < 26:
 
                     rospy.loginfo('I SEE A ROBOT WITH ID: ' + str(currentMarker) )
 
@@ -201,6 +202,7 @@ def getTag(msg):
             rospy.loginfo("ID: " + str(currentMarker))
             rospy.loginfo("Time Taken: " + str(timeTaken))
             rospy.loginfo("id List: " + str(idList))
+            rospy.loginfo("id Buffer: " + str(idListBuffer))
             
 
 def timeSince(timeSinceLast):

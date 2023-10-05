@@ -16,7 +16,7 @@
     <remap from="camera_info" to="$(arg cam_info_topic)" />
   </node>
 
-  <node name="arLogger" pkg="arLogger" type="logger_2.py" output="screen">
+  <node name="arLogger" pkg="arLogger" type="logger.py" output="screen">
 
   <!-- <node name="jogger" pkg="arLogger" type="jogger.py" output="screen"> -->
     
