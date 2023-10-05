@@ -89,35 +89,42 @@ def makeFolder():
 
     path, _, logFolder = getPath()
 
-    testFile = None
-
-    # test folder permisions
     try:
-        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
-    except IOError:
-        try:
-            os.mkdir(logFolder)
-        except OSError:
-            print("No log folder created")
-        else:
-            print("Log folder created")
+        os.mkdir(logFolder)
+    except OSError:
+        print("No log folder created")
+    else:
+        print("Log folder created")
 
-    testFile.close()
-    os.remove(testFile.name)
+    # testFile = None
 
-    # test folder permisions
-    try:
-        testFile = open(os.path.join(path, 'test.txt'), 'w+')
-    except IOError:
-        try:
-            os.mkdir(path)
-        except OSError:
-            print("No log folder created")
-        else:
-            print("Log folder created")
+    # # test folder permisions
+    # try:
+    #     testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
+    # except IOError:
+    #     try:
+    #         os.mkdir(logFolder)
+    #     except OSError:
+    #         print("No log folder created")
+    #     else:
+    #         print("Log folder created")
 
-    testFile.close()
-    os.remove(testFile.name)
+    # testFile.close()
+    # os.remove(testFile.name)
+
+    # # test folder permisions
+    # try:
+    #     testFile = open(os.path.join(path, 'test.txt'), 'w+')
+    # except IOError:
+    #     try:
+    #         os.mkdir(path)
+    #     except OSError:
+    #         print("No log folder created")
+    #     else:
+    #         print("Log folder created")
+
+    # testFile.close()
+    # os.remove(testFile.name)
 
 
 def saveCSV():
