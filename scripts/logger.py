@@ -60,85 +60,48 @@ def getTime():
 
     rosTime = rosCorrentTime.strftime("%H:%M: %S")
 
-    dateStr = dateTime.strftime("%m%d")
-
-    return dtString, rosTime, dateStr
+    return dtString, rosTime
 
 
 def getPath():
 
-    timenow, _, dateStr = getTime()
+    timenow, _ = getTime()
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    logFolder = os.path.join(packagePath, "logs")
-    folderName = dateStr
-
-    path = os.path.join(logFolder)
+    path = os.path.join(packagePath, "logs")
 
     fullpath = os.path.join(path, timenow + "_arlog.csv")
 
-    print(logFolder)
-
-    print(path)
-
     print (fullpath)
 
-    return path, fullpath, logFolder
+    return path, fullpath
 
 def makeFolder():
 
-    path, _, logFolder = getPath()
+    path, _ = getPath()
 
+    testFile = None
+
+    # test folder permisions
     try:
-        os.mkdir(path)
-    except OSError:
-        print("No log folder created")
-    else:
-        print("Log folder created")
-    
-    return
+        testFile = open(os.path.join(path, 'test.txt'), 'w+')
+    except IOError:
+        try:
+            os.mkdir(path)
+        except OSError:
+            print("No log folder created")
+        else:
+            print("Log folder created")
 
-    # testFile = None
-
-    # # test folder permisions
-    # try:
-    #     testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
-    # except IOError:
-    #     try:
-    #         os.mkdir(logFolder)
-    #     except OSError:
-    #         print("No log folder created")
-    #     else:
-    #         print("Log folder created")
-
-    # testFile.close()
-    # os.remove(testFile.name)
-
-    # # test folder permisions
-    # try:
-    #     testFile = open(os.path.join(path, 'test.txt'), 'w+')
-    # except IOError:
-    #     try:
-    #         os.mkdir(path)
-    #     except OSError:
-    #         print("No log folder created")
-    #     else:
-    #         print("Log folder created")
-
-    # testFile.close()
-    # os.remove(testFile.name)
+    testFile.close()
+    os.remove(testFile.name)
 
 
 def saveCSV():
     
-    _, filename, _ = getPath()
-
-    # makeFolder()
-
-
-    idList.extend(idListBuffer) #adds whatever is left in buffer to idList
+    _, filename = getPath()
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
@@ -319,7 +282,7 @@ def beHaveFun():
 
 if __name__ == '__main__':
     rosInit()
-    
+    makeFolder()
 
     plastic_thread = threading.Thread(target=beHaveFun)
     plastic_thread.daemon = True  # This makes the thread exit when the main program exits
