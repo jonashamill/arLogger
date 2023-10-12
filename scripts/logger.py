@@ -219,13 +219,7 @@ def timeSince(timeSinceLast):
 
     if currentMarker > 0: 
         
-        if timeSinceLast < timeThresholdHigh:
-
-            beHave += 5
-
-
-        elif timeSinceLast > timeThresholdLow:
-
+        if timeSinceLast > timeThresholdLow:
 
             beHave -= 5
  
@@ -239,7 +233,26 @@ def timeSince(timeSinceLast):
 
 
         rosTimeList.append(rosTimeNow)
-            
+
+
+
+def checkTime():
+
+    timeVar = 0
+
+    while not rospy.is_shutdown():
+
+        timeVar += 1
+
+        if (timeVar > 6):
+
+            beHave += 5
+
+            timeVar = 0
+        
+        time.sleep(1)
+    
+
        
     
 
@@ -287,5 +300,11 @@ if __name__ == '__main__':
     plastic_thread = threading.Thread(target=beHaveFun)
     plastic_thread.daemon = True  # This makes the thread exit when the main program exits
     plastic_thread.start()  # Start the thread
+
+    plastic_thread = threading.Thread(target=checkTime)
+    plastic_thread.daemon = True  # This makes the thread exit when the main program exits
+    plastic_thread.start()  # Start the thread
+
+
     
     rospy.spin()
