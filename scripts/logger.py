@@ -227,9 +227,9 @@ def timeSince(timeSinceLast):
 
     if currentMarker > 0: 
         
-        if timeSinceLast > timeThresholdLow:
+        if timeSinceLast <= timeThresholdLow:
 
-            beHave -= 5
+            beHave += 5
 
             timeVar = 0
  
@@ -249,7 +249,7 @@ def timeSince(timeSinceLast):
 def checkTime():
     global timeThresholdHigh
     global timeVar
-    timeVar = 0
+    global beHave
 
     while not rospy.is_shutdown():
         time.sleep(1)  # Sleep for 1 second
@@ -257,7 +257,7 @@ def checkTime():
 
         if timeVar >= timeThresholdHigh:
             with beHaveLock:
-                beHave += 5
+                beHave -= 5
             timeVar = 0
 
         # Add more logic here if needed
