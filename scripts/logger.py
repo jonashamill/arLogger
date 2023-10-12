@@ -20,7 +20,7 @@ timeList = []
 timeSinceList = []
 rosTimeList = []
 ranNoList = []
-beHaveList = []
+activityLevelList = []
 stateList = []
 timeTaken = 0
 currentMarker = 999
@@ -28,7 +28,7 @@ start = time.perf_counter()
 maxVel = 0
 
 
-beHave = 50
+activityLevel = 50
 ranDomNo = 50
 
 
@@ -112,10 +112,10 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Behave Val', 'Random No', 'State'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Activity Level', 'Random No', 'State'])
         
         for i in range(len(stateList)):
-            writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], beHaveList[i],ranNoList[i],stateList[i]])
+            writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], activityLevelList[i],ranNoList[i],stateList[i]])
 
 
 
@@ -136,7 +136,7 @@ def getTag(msg):
     global timeTaken
     global stateList
     global ranDomNo
-    global beHave
+    global activityLevel
 
 
     for marker in msg.markers:
@@ -188,7 +188,7 @@ def getTag(msg):
 
 
                 rosTimeList.append(rosTimeNow)
-                beHaveList.append(beHave)
+                activityLevelList.append(activityLevel)
                 ranNoList.append(ranDomNo)
                 timeList.append(timeTaken)
                 
@@ -218,7 +218,7 @@ def timeSince(timeSinceLast):
     timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
 
 
-    global beHave
+    global activityLevel
 
     global timeVar
    
@@ -229,13 +229,13 @@ def timeSince(timeSinceLast):
         
         if timeSinceLast <= timeThresholdLow:
 
-            beHave += 5
+            activityLevel += 5
 
             timeVar = 0
  
 
-         # Ensure beHave stays within a reasonable range (e.g., between 0 and 100)
-        beHave = max(1, min(100, beHave))
+         # Ensure activityLevel within a reasonable range (e.g., between 0 and 100)
+        activityLevel = max(1, min(100, activityLevel))
 
         stateList.append(plastic)
 
@@ -249,27 +249,27 @@ def timeSince(timeSinceLast):
 def checkTime():
     global timeThresholdHigh
     global timeVar
-    global beHave
+    global activityLevel
 
     while not rospy.is_shutdown():
         time.sleep(1)  # Sleep for 1 second
         timeVar += 1
 
         if timeVar >= timeThresholdHigh:
-            with beHaveLock:
-                beHave -= 5
+            with activityLevel:
+                activityLevel -= 5
+
+                activityLevel = max(1, min(100, activityLevel))
+
             timeVar = 0
 
-        # Add more logic here if needed
-
-    
 
        
 
 def beHaveFun():
 
     global plastic
-    global beHave
+    global activityLevel
     global ranDomNo
 
     
@@ -278,10 +278,10 @@ def beHaveFun():
         
         ranDomNo = random.randrange(1,101)
 
-        rospy.loginfo('behave: ' + str(beHave) + ' random: ' + str(ranDomNo))
+        rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
 
 
-        if beHave > ranDomNo:
+        if activityLevel > ranDomNo:
 
             plastic = 1
 
@@ -307,7 +307,7 @@ if __name__ == '__main__':
     rosInit()
     makeFolder()
 
-    beHaveLock = threading.Lock()
+    activityLevelLock = threading.Lock()
 
 
     plastic_thread = threading.Thread(target=beHaveFun)
