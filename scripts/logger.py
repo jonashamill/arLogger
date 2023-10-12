@@ -7,7 +7,7 @@ import rospkg
 from datetime import datetime
 import time
 import os
-from std_msgs.msg import Int32, Float32
+from std_msgs.msg import Int32
 import random
 import threading
 
@@ -40,12 +40,16 @@ timeVar = 0
 def rosInit():
 
     global timeThresholdHigh
+    global timeThresholdLow
 
     rospy.init_node("arLogger")
 
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
 
+
+    # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
+    timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
     timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
@@ -203,7 +207,7 @@ def getTag(msg):
                 
             
 
-                timeSince(timeSinceLast)
+                checktimeLow(timeSinceLast)
 
 
             rospy.loginfo("ID: " + str(currentMarker))
@@ -212,11 +216,9 @@ def getTag(msg):
             rospy.loginfo("id Buffer: " + str(idListBuffer))
             
 
-def timeSince(timeSinceLast):
+def checktimeLow(timeSinceLast):
 
-    # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
-    timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
-
+    global timeThresholdLow  
 
     global activityLevel
 
@@ -246,7 +248,7 @@ def timeSince(timeSinceLast):
 
 
 
-def checkTime():
+def checkTimeHigh():
     global timeThresholdHigh
     global timeVar
     global activityLevel
@@ -314,7 +316,7 @@ if __name__ == '__main__':
     plastic_thread.daemon = True  # This makes the thread exit when the main program exits
     plastic_thread.start()  # Start the thread
 
-    plastic_thread = threading.Thread(target=checkTime)
+    plastic_thread = threading.Thread(target=checkTimeHigh)
     plastic_thread.daemon = True  # This makes the thread exit when the main program exits
     plastic_thread.start()  # Start the thread
 
