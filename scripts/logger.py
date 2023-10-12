@@ -21,7 +21,7 @@ timeSinceList = []
 rosTimeList = []
 ranNoList = []
 activityLevelList = []
-stateList = []
+activityModeList = []
 timeTaken = 0
 currentMarker = 999
 start = time.perf_counter()
@@ -33,7 +33,7 @@ ranDomNo = 50
 
 
  # Init with base value
-plastic = 0
+activityMode = 0
 
 timeVar = 0
 
@@ -116,10 +116,10 @@ def saveCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Activity Level', 'Random No', 'State'])
+        writer.writerow(['ID', 'Time', 'Timesince', 'ROS Time', 'Activity Level', 'Random No', 'Activity Mode'])
         
-        for i in range(len(stateList)):
-            writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], activityLevelList[i],ranNoList[i],stateList[i]])
+        for i in range(len(activityModeList)):
+            writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], activityLevelList[i],ranNoList[i],activityModeList[i]])
 
 
 
@@ -138,7 +138,7 @@ def getTag(msg):
     global idListBuffer
     global currentMarker
     global timeTaken
-    global stateList
+    global activityModeList
     global ranDomNo
     global activityLevel
 
@@ -239,7 +239,7 @@ def checktimeLow(timeSinceLast):
          # Ensure activityLevel within a reasonable range (e.g., between 0 and 100)
         activityLevel = max(0, min(100, activityLevel))
 
-        stateList.append(plastic)
+        activityModeList.append(activityMode)
 
         _, rosTimeNow = getTime()
 
@@ -275,7 +275,7 @@ def beHaveFun():
 
     #This function will generate a random number to determine activity mode based on probability
 
-    global plastic
+    global activityMode
     global activityLevel
     global ranDomNo
 
@@ -283,21 +283,21 @@ def beHaveFun():
 
     while not rospy.is_shutdown():
         
-        ranDomNo = random.randrange(1,101)
+        ranDomNo = random.randrange(0,101)
 
         rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
 
 
         if activityLevel < ranDomNo:
 
-            plastic = 1
+            activityMode = 1
 
             rospy.loginfo('Patrol Mode - (Neophobic)')
 
 
         else:
             
-            plastic = 2
+            activityMode = 2
         
             rospy.loginfo('Explore Mode - (Neophilic)')
 
