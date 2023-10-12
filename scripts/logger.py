@@ -281,7 +281,7 @@ def beHaveFun():
         rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
 
 
-        if activityLevel > ranDomNo:
+        if activityLevel < ranDomNo:
 
             plastic = 1
 
