@@ -218,10 +218,10 @@ def getTag(msg):
 
 def checktimeLow(timeSinceLast):
 
+    #This function will increase activity level by 5 if it sees multple AR Tags in a span of less than timethresholdlow
+
     global timeThresholdLow  
-
     global activityLevel
-
     global timeVar
    
     rospy.loginfo('Time since last: %s', str(timeSinceLast))
@@ -237,7 +237,7 @@ def checktimeLow(timeSinceLast):
  
 
          # Ensure activityLevel within a reasonable range (e.g., between 0 and 100)
-        activityLevel = max(1, min(100, activityLevel))
+        activityLevel = max(0, min(100, activityLevel))
 
         stateList.append(plastic)
 
@@ -249,6 +249,9 @@ def checktimeLow(timeSinceLast):
 
 
 def checkTimeHigh():
+
+    #This function will count to timethresholdhigh in seconds if an AR Tag is not detected then decrease activity level by 5
+
     global timeThresholdHigh
     global timeVar
     global activityLevel
@@ -261,7 +264,7 @@ def checkTimeHigh():
             with activityLevel:
                 activityLevel -= 5
 
-                activityLevel = max(1, min(100, activityLevel))
+                activityLevel = max(0, min(100, activityLevel))
 
             timeVar = 0
 
@@ -269,6 +272,8 @@ def checkTimeHigh():
        
 
 def beHaveFun():
+
+    #This function will generate a random number to determine activity mode based on probability
 
     global plastic
     global activityLevel
@@ -286,7 +291,6 @@ def beHaveFun():
         if activityLevel < ranDomNo:
 
             plastic = 1
-
 
             rospy.loginfo('Patrol Mode - (Neophobic)')
 
