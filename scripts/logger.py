@@ -305,7 +305,7 @@ def beHaveFun():
 
         # Publish 'plastic' as a ROS topic
         plasticPub = rospy.Publisher('plasticTopic', Int32, queue_size=10)
-        plasticPub.publish(plastic)
+        plasticPub.publish(activityMode)
 
         time.sleep(1)
 
