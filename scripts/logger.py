@@ -35,12 +35,19 @@ ranDomNo = 50
  # Init with base value
 plastic = 0
 
+timeVar = 0
+
 def rosInit():
+
+    global timeThresholdHigh
 
     rospy.init_node("arLogger")
 
 
     ar_subscriber = rospy.Subscriber("ar_pose_marker", AlvarMarkers, getTag)
+
+    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
+
 
     # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
     # rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
@@ -209,10 +216,11 @@ def timeSince(timeSinceLast):
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
     timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
-    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
     global beHave
+
+    global timeVar
    
     rospy.loginfo('Time since last: %s', str(timeSinceLast))
 
@@ -222,6 +230,8 @@ def timeSince(timeSinceLast):
         if timeSinceLast > timeThresholdLow:
 
             beHave -= 5
+
+            timeVar = 0
  
 
          # Ensure beHave stays within a reasonable range (e.g., between 0 and 100)
@@ -237,24 +247,24 @@ def timeSince(timeSinceLast):
 
 
 def checkTime():
-
+    global timeThresholdHigh
+    global timeVar
     timeVar = 0
 
     while not rospy.is_shutdown():
-
+        time.sleep(1)  # Sleep for 1 second
         timeVar += 1
 
-        if (timeVar > 6):
-
-            beHave += 5
-
+        if timeVar >= timeThresholdHigh:
+            with beHaveLock:
+                beHave += 5
             timeVar = 0
-        
-        time.sleep(1)
+
+        # Add more logic here if needed
+
     
 
        
-    
 
 def beHaveFun():
 
@@ -296,6 +306,9 @@ def beHaveFun():
 if __name__ == '__main__':
     rosInit()
     makeFolder()
+
+    beHaveLock = threading.Lock()
+
 
     plastic_thread = threading.Thread(target=beHaveFun)
     plastic_thread.daemon = True  # This makes the thread exit when the main program exits
