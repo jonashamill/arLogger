@@ -286,14 +286,14 @@ def beHaveFun():
             plastic = 1
 
 
-            rospy.loginfo('Patrol Mode')
+            rospy.loginfo('Patrol Mode - (Neophobic)')
 
 
         else:
             
             plastic = 2
         
-            rospy.loginfo('Explore Mode')
+            rospy.loginfo('Explore Mode - (Neophilic)')
 
 
 
