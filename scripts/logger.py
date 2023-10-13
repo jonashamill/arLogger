@@ -287,19 +287,14 @@ def beHaveFun():
 
         # rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
 
-        probabilityOutput = 'Activity Level: ' + str(activityLevel) + ' random: ' + str(ranDomNo)
-
-        probabilityMessage = String()
-        probabilityMessage.data = probabilityOutput
-
-        # Publish 'plastic' as a ROS topic
-        plasticPub = rospy.Publisher('probabilityTopic', String, queue_size=10)
-        plasticPub.publish(probabilityMessage)
+        
 
 
         if activityLevel < ranDomNo:
 
             activityMode = 1
+
+            activityOutput = 'Patrol - (Neophobic)'
 
             # rospy.loginfo('Patrol Activity Mode - (Neophobic)')
 
@@ -307,8 +302,21 @@ def beHaveFun():
         else:
             
             activityMode = 2
+
+            activityOutput = 'Explore - (Neophilic)'
         
             # rospy.loginfo('Explore Activity Mode - (Neophilic)')
+
+
+
+        probabilityOutput = 'Activity Level: ' + str(activityLevel) + ' Random: ' + str(ranDomNo) + '\n Activity Mode: ' + str(activityOutput)
+
+        probabilityMessage = String()
+        probabilityMessage.data = probabilityOutput
+
+        # Publish 'plastic' as a ROS topic
+        plasticPub = rospy.Publisher('probabilityTopic', String, queue_size=10)
+        plasticPub.publish(probabilityMessage)
 
 
 
