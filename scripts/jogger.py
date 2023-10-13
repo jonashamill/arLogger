@@ -162,6 +162,6 @@ def saveCSV(filename, data, headers):
 
 if __name__ == "__main__":
     rosInit()
-    # makeFolder()
+    makeFolder()
 
     rospy.spin()
