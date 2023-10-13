@@ -261,7 +261,7 @@ def checkTimeHigh():
         timeVar += 1
 
         if timeVar >= timeThresholdHigh:
-            with activityLevel:
+            with activityLevelLock:
                 activityLevel -= 5
 
                 activityLevel = max(0, min(100, activityLevel))
