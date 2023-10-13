@@ -50,9 +50,9 @@ def getPath():
     folderName = dateStr
 
 
-    velPath = os.path.join(logFolder, folderName + "vel")
-    posePath = os.path.join(logFolder,folderName + "pose")
-    batPath = os.path.join(logFolder,folderName + "bat")
+    # velPath = os.path.join(logFolder, folderName + "vel")
+    # posePath = os.path.join(logFolder,folderName + "pose")
+    # batPath = os.path.join(logFolder,folderName + "bat")
 
 
     velFullpath = os.path.join(logFolder, timenow + "_vellog.csv")
@@ -63,83 +63,25 @@ def getPath():
     print(poseFullpath)
     print(batFullpath)
 
-    return logFolder, velPath, velFullpath, posePath, poseFullpath, batPath, batFullpath
+    return logFolder, velFullpath, poseFullpath, batFullpath
 
 def makeFolder():
 
-    logFolder, velPath, _, posePath, _, batPath, _= getPath()
+    path, _ , _ , _= getPath()
 
     testFile = None
 
-    # test folder permisions and makes log folder
+    # test folder permisions
     try:
-        testFile = open(os.path.join(logFolder, 'test.txt'), 'w+')
+        testFile = open(os.path.join(path, 'test.txt'), 'w+')
     except IOError:
         try:
-            os.mkdir(logFolder)
-
-            print ("Log folder created")
-
+            os.mkdir(path)
         except OSError:
             print("No log folder created")
+        else:
+            print("Log folder created")
 
-
-    testFile.close()
-    os.remove(testFile.name)
-
-
-    # test folder permisions and makes vel folder
-    try:
-        testFile = open(os.path.join(velPath, 'test.txt'), 'w+')
-    except IOError:
-        try:
-            os.mkdir(velPath)
-
-            print ("Vel folder created")
-
-            testFile.close()
-            os.remove(testFile.name)
-
-        except OSError:
-            print("No vel sub-folder created")
-    
-    testFile.close()
-    os.remove(testFile.name)
-    
-
-    # test folder permisions and makes vel folder
-    try:
-        testFile = open(os.path.join(posePath, 'test.txt'), 'w+')
-    except IOError:
-        try:
-            os.mkdir(posePath)
-
-            print ("Vel folder created")
-
-            testFile.close()
-            os.remove(testFile.name)
-
-        except OSError:
-            print("No vel sub-folder created")
-    
-    testFile.close()
-    os.remove(testFile.name)
-
-    # test folder permisions and makes vel folder
-    try:
-        testFile = open(os.path.join(batPath, 'test.txt'), 'w+')
-    except IOError:
-        try:
-            os.mkdir(batPath)
-
-            print ("Vel folder created")
-
-            testFile.close()
-            os.remove(testFile.name)
-
-        except OSError:
-            print("No vel sub-folder created")
-    
     testFile.close()
     os.remove(testFile.name)
 
@@ -154,7 +96,7 @@ def velCallback(msg):
     timeStamp = round(finishTime-startTime, 2)
 
 
-    _, velPath, _, _, _, _, _ = getPath()
+    _, velPath, _, _ = getPath()
 
 
     lin_x = msg.linear.x
@@ -177,7 +119,7 @@ def poseCallback(msg):
     timeStamp = round(finishTime-startTime, 2)
 
 
-    _, _, _, posePath, _, _, _ = getPath()
+    _, _, posePath, _ = getPath()
 
     x = msg.pose.pose.position.x
     y = msg.pose.pose.position.y
@@ -203,7 +145,7 @@ def batCallback(msg):
 
     timeStamp = round(finishTime-startTime, 2)
 
-    _, _, _, _, _, batPath, _ = getPath()
+    _ , _, _, batPath = getPath()
 
     _, timeNow = getTime()
 
