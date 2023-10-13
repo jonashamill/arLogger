@@ -12,12 +12,8 @@ import time
 
 startTime = time.perf_counter()
 
-def rosInit():
-    rospy.init_node("jogger")
-
-    vel_subscriber = rospy.Subscriber("nav_vel", Twist, velCallback)
-    pose_subscriber = rospy.Subscriber("amcl_pose", PoseWithCovarianceStamped, poseCallback)
-    battery_subscriber = rospy.Subscriber("firmware/battery_averaged", Float32, batCallback)
+# def rosInit():
+    
 
     # rospy.on_shutdown(saveCSV)
 
@@ -62,25 +58,25 @@ def getPath():
 
     return logFolder, velFullpath, poseFullpath, batFullpath
 
-def makeFolder():
+# def makeFolder():
 
-    path, _ , _ , _= getPath()
+#     path, _ , _ , _= getPath()
 
-    testFile = None
+#     testFile = None
 
-    # test folder permisions
-    try:
-        testFile = open(os.path.join(path, 'test.txt'), 'w+')
-    except IOError:
-        try:
-            os.mkdir(path)
-        except OSError:
-            print("No log folder created")
-        else:
-            print("Log folder created")
+#     # test folder permisions
+#     try:
+#         testFile = open(os.path.join(path, 'test.txt'), 'w+')
+#     except IOError:
+#         try:
+#             os.mkdir(path)
+#         except OSError:
+#             print("No log folder created")
+#         else:
+#             print("Log folder created")
 
-    testFile.close()
-    os.remove(testFile.name)
+#     testFile.close()
+#     os.remove(testFile.name)
 
 
 
@@ -161,7 +157,14 @@ def saveCSV(filename, data, headers):
         writer.writerow([data])
 
 if __name__ == "__main__":
-    rosInit()
-    makeFolder()
+    
+    rospy.init_node("jogger")
+
+    vel_subscriber = rospy.Subscriber("nav_vel", Twist, velCallback)
+    pose_subscriber = rospy.Subscriber("amcl_pose", PoseWithCovarianceStamped, poseCallback)
+    battery_subscriber = rospy.Subscriber("firmware/battery_averaged", Float32, batCallback)
+
+
+    # makeFolder()
 
     rospy.spin()
