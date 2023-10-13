@@ -7,7 +7,7 @@ import rospkg
 from datetime import datetime
 import time
 import os
-from std_msgs.msg import Int32
+from std_msgs.msg import Int32, String
 import random
 import threading
 
@@ -287,11 +287,14 @@ def beHaveFun():
 
         # rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
 
-        probabilityOutput = 'behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo)
+        probabilityOutput = 'Activity Level: ' + str(activityLevel) + ' random: ' + str(ranDomNo)
+
+        probabilityMessage = String()
+        probabilityMessage.data = probabilityOutput
 
         # Publish 'plastic' as a ROS topic
-        plasticPub = rospy.Publisher('probabilityTopic', Int32, queue_size=10)
-        plasticPub.publish(probabilityOutput)
+        plasticPub = rospy.Publisher('probabilityTopic', String, queue_size=10)
+        plasticPub.publish(probabilityMessage)
 
 
         if activityLevel < ranDomNo:
