@@ -97,7 +97,7 @@ def velCallback(msg):
 
 
     lin_x = msg.linear.x
-    ang_z = msg.angular.x
+    ang_z = msg.angular.z
     _, timeNow = getTime()
     
     velData = [timeNow, timeStamp, lin_x, ang_z]
