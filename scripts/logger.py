@@ -285,7 +285,7 @@ def beHaveFun():
         
         ranDomNo = random.randrange(0,101)
 
-        rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
+        # rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
 
         probabilityOutput = 'behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo)
 
