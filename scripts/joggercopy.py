@@ -52,12 +52,12 @@ def getPath():
 
     velPath = os.path.join(logFolder, folderName + "vel")
     posePath = os.path.join(logFolder,folderName + "pose")
-    batPath = os.path.join(logFolder,folderName + "bat")
+    batPath = os.path.join(logFolder,folderName + "pose")
 
 
-    velFullpath = os.path.join(logFolder, timenow + "_vellog.csv")
-    poseFullpath = os.path.join(logFolder, timenow + "_poselog.csv")
-    batFullpath = os.path.join(logFolder, timenow + "_batlog.csv")
+    velFullpath = os.path.join(velPath, timenow + "_vellog.csv")
+    poseFullpath = os.path.join(posePath, timenow + "_poselog.csv")
+    batFullpath = os.path.join(batPath, timenow + "_batlog.csv")
 
     print (velFullpath)
     print(poseFullpath)
@@ -223,6 +223,6 @@ def saveCSV(filename, data, headers):
 
 if __name__ == "__main__":
     rosInit()
-    # makeFolder()
+    makeFolder()
 
     rospy.spin()
