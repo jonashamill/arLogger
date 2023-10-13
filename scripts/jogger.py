@@ -19,7 +19,7 @@ def rosInit():
     pose_subscriber = rospy.Subscriber("amcl_pose", PoseWithCovarianceStamped, poseCallback)
     battery_subscriber = rospy.Subscriber("firmware/battery_averaged", Float32, batCallback)
 
-    rospy.on_shutdown(saveCSV)
+    # rospy.on_shutdown(saveCSV)
 
 def getTime():
 
