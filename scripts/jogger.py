@@ -40,14 +40,11 @@ def getPath():
 
     timenow, _ = getTime()
 
-    dateFormat = "%m%d"
-    dateStr = timenow.strftime(dateFormat)
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
     logFolder = os.path.join(packagePath, "logs")
-    folderName = dateStr
 
 
     # velPath = os.path.join(logFolder, folderName + "vel")
