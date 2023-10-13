@@ -317,7 +317,7 @@ def beHaveFun():
         activityPub = rospy.Publisher('activityTopic', String, queue_size=10)
         activityPub.publish(probabilityMessage)
         
-        activityPubOutput = '\n Activity Mode: ' + str(activityOutput)
+        activityPubOutput = 'Activity Mode: ' + str(activityOutput)
         activityMessage = String()
         activityMessage.data = activityPubOutput
 
