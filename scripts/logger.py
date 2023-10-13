@@ -292,7 +292,7 @@ def beHaveFun():
 
         if activityLevel < ranDomNo:
 
-            activityMode = 1
+            activityMode = 2
 
             activityOutput = 'Patrol - (Neophobic)'
 
@@ -301,7 +301,7 @@ def beHaveFun():
 
         else:
             
-            activityMode = 2
+            activityMode = 1
 
             activityOutput = 'Explore - (Neophilic)'
         
