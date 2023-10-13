@@ -218,7 +218,7 @@ def getTag(msg):
 
 def checktimeLow(timeSinceLast):
 
-    #This function will increase activity level by 5 if it sees multple AR Tags in a span of less than timethresholdlow
+    #This function will increase activity level by 5 if it sees multiple AR Tags in a span of less than timethresholdlow
 
     global timeThresholdLow  
     global activityLevel
@@ -292,14 +292,14 @@ def beHaveFun():
 
             activityMode = 1
 
-            rospy.loginfo('Patrol Mode - (Neophobic)')
+            rospy.loginfo('Patrol Activity Mode - (Neophobic)')
 
 
         else:
             
             activityMode = 2
         
-            rospy.loginfo('Explore Mode - (Neophilic)')
+            rospy.loginfo('Explore Activity Mode - (Neophilic)')
 
 
 
