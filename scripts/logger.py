@@ -309,14 +309,19 @@ def beHaveFun():
 
 
 
-        probabilityOutput = 'Activity Level: ' + str(activityLevel) + ' Random: ' + str(ranDomNo) + '\n Activity Mode: ' + str(activityOutput)
-
+        probabilityOutput = 'Activity Level: ' + str(activityLevel) + ' Random: ' + str(ranDomNo) 
         probabilityMessage = String()
         probabilityMessage.data = probabilityOutput
 
         # Publish 'plastic' as a ROS topic
-        plasticPub = rospy.Publisher('probabilityTopic', String, queue_size=10)
-        plasticPub.publish(probabilityMessage)
+        activityPub = rospy.Publisher('activityTopic', String, queue_size=10)
+        activityPub.publish(probabilityMessage)
+        
+        activityPubOutput = '\n Activity Mode: ' + str(activityOutput)
+        activityMessage = String()
+        activityMessage.data = activityPubOutput
+
+        activityPub.publish(activityPubOutput)
 
 
 
