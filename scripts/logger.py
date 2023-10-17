@@ -83,7 +83,7 @@ def getPath():
 
     path = os.path.join(packagePath, "logs")
 
-    fullpath = os.path.join(path, timenow + "_arlog.csv")
+    fullpath = os.path.join(path, timenow + "_TTH_" + timeThresholdLow + "_" + timeThresholdHigh + "_arlog.csv")
 
     print (fullpath)
 
