@@ -8,7 +8,7 @@ def convert_time(rostime):
     return [datetime.strptime(t, '%H:%M:%S') for t in cleaned_time]
 
 # Load data from the first CSV
-arlog = 'logs/20231013203533_arlog.csv'
+arlog = 'logs/20231013212935_idlog.csv'
 data1 = np.genfromtxt(arlog, delimiter=',', skip_header=1, dtype=str)
 
 rostime1, ID1, state1, behave_val1, random_no1 = data1[:, 3], data1[:, 0], data1[:, 6], data1[:, 4], data1[:, 5]
@@ -24,34 +24,36 @@ random_no1 = random_no1.astype(float)
 fig, ax1 = plt.subplots()
 ax2 = ax1.twinx()
 
-plt.title('Trial No Plasticity', pad=30)
+plt.title('ID by QTY', pad=30)
 
 # Plot data
 line1, = ax1.plot(rostime1, random_no1, label='Probability Value')
 line2, = ax1.plot(rostime1, behave_val1, label='Activity Level')
-scatter1 = ax1.scatter(rostime1, random_no1, c='black', label='ID')
+
+# Plot ID against y-axis
+scatter1 = ax1.scatter(rostime1, ID1.astype(int), c='black', label='ID')
 
 # State plotting
-state_map = {1: 'Neophobic', 2: 'Neophilic'}
+state_map = {0: 'Neophobic', 1: 'Neophilic'}
 state_labels = [state_map[s] for s in state1]
 line3, = ax2.step(rostime1, state1, where='post', linestyle='-', color='blue', label='State')
 
 # Annotations for ID
 id_annotations = []
 for i, txt in enumerate(ID1):
-    annot = ax1.annotate(txt, (rostime1[i], int(random_no1[i])), textcoords="offset points", xytext=(0,10), ha='center')
+    annot = ax1.annotate(txt, (rostime1[i], int(ID1[i])), textcoords="offset points", xytext=(0,10), ha='center')
     id_annotations.append(annot)
 
 # Create checkboxes to toggle lines
 rax = plt.axes([0.8, 0.5, 0.1, 0.2])
-check = CheckButtons(rax, ('Probablity Value', 'Activity Level', 'ID', 'Activity Mode'), (True, True, True, True))
+check = CheckButtons(rax, ('Probability Value', 'Activity Level', 'ID', 'Activity Mode'), (True, True, True, True))
 
 def toggle(label):
-    if label == 'Probablity Value': 
+    if label == 'Probability Value':
         line1.set_visible(not line1.get_visible())
-    elif label == 'Activity Level': 
+    elif label == 'Activity Level':
         line2.set_visible(not line2.get_visible())
-    elif label == 'ID': 
+    elif label == 'ID':
         scatter1.set_visible(not scatter1.get_visible())
         for annot in id_annotations:
             annot.set_visible(not annot.get_visible())
@@ -63,9 +65,9 @@ check.on_clicked(toggle)
 
 # Labels and title
 ax1.set_xlabel('ROS Time')
-ax1.set_ylabel('Activity Probablity')
+ax1.set_ylabel('ID')
 ax2.set_ylabel('Activity Mode')
-ax2.set_yticks([1, 2])
+ax2.set_yticks([0, 1])
 ax2.set_yticklabels(['Neophobic', 'Neophilic'])
 
 # Move legend above the graph
