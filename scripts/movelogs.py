@@ -1,12 +1,15 @@
 import os
 import shutil
 from datetime import datetime
+import rospy
 
-# Define the path to the 'logs' folder where the existing log files are located
-logs_folder = 'logs'  # Update this with the actual path to your 'logs' folder
 
-# List all files in the 'logs' folder
-log_files = [f for f in os.listdir(logs_folder) if os.path.isfile(os.path.join(logs_folder, f))]
+def rosInit():
+
+    rospy.init_node("movelogs")
+    
+    rospy.on_shutdown(movelogs)
+
 
 # Define a function to extract the publication date from the file name
 def extract_publication_date(file_name):
@@ -21,21 +24,35 @@ def extract_publication_date(file_name):
         pass  # Ignore files with incorrect date formats
     return None
 
-# Create subfolders for each publication date and move files accordingly
-for file_name in log_files:
-    publication_date = extract_publication_date(file_name)
-    if publication_date:
-        date_str = publication_date.strftime("%m%d")
-        subfolder_path = os.path.join(logs_folder, date_str)
-        
-        # Create the subfolder if it doesn't exist
-        os.makedirs(subfolder_path, exist_ok=True)
-        
-        # Move the log file to the corresponding subfolder
-        source_path = os.path.join(logs_folder, file_name)
-        dest_path = os.path.join(subfolder_path, file_name)
-        shutil.move(source_path, dest_path)
-        print(f"Moved '{file_name}' to subfolder '{date_str}'")
+def movelogs():
+    # Define the path to the 'logs' folder where the existing log files are located
+    logs_folder = 'logs'  # Update this with the actual path to your 'logs' folder
+
+    # List all files in the 'logs' folder
+    log_files = [f for f in os.listdir(logs_folder) if os.path.isfile(os.path.join(logs_folder, f))]
+
+
+    # Create subfolders for each publication date and move files accordingly
+    for file_name in log_files:
+        publication_date = extract_publication_date(file_name)
+        if publication_date:
+            date_str = publication_date.strftime("%m%d")
+            subfolder_path = os.path.join(logs_folder, date_str)
+            
+            # Create the subfolder if it doesn't exist
+            os.makedirs(subfolder_path, exist_ok=True)
+            
+            # Move the log file to the corresponding subfolder
+            source_path = os.path.join(logs_folder, file_name)
+            dest_path = os.path.join(subfolder_path, file_name)
+            shutil.move(source_path, dest_path)
+            print(f"Moved '{file_name}' to subfolder '{date_str}'")
+
+
+
+if __name__ == '__main__':
+    rosInit()
+
 
 # print("Log files have been organized into subfolders by publication date.")
 
