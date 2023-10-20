@@ -2,6 +2,8 @@ import os
 import shutil
 from datetime import datetime
 import rospy
+import rospkg
+
 
 
 def rosInit():
@@ -25,8 +27,12 @@ def extract_publication_date(file_name):
     return None
 
 def movelogs():
+
+    rp = rospkg.RosPack()
+    packagePath = rp.get_path('arLogger')
+
     # Define the path to the 'logs' folder where the existing log files are located
-    logs_folder = 'logs'  # Update this with the actual path to your 'logs' folder
+    logs_folder = os.path.join(packagePath, "logs")  # Update this with the actual path to your 'logs' folder
 
     # List all files in the 'logs' folder
     log_files = [f for f in os.listdir(logs_folder) if os.path.isfile(os.path.join(logs_folder, f))]
