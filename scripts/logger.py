@@ -14,6 +14,8 @@ import threading
 #Global vars
 idList = []
 idListBuffer = []
+idQTY = 0
+idQTYList = 0
 
 
 timeList = []
@@ -352,7 +354,7 @@ def beHaveFun():
 
         time.sleep(1)
     
-    metricsCSV(timeThreadList, actModeList, probableList, actLevelList)
+    rospy.on_shutdown(metricsCSV(timeThreadList, actModeList, probableList, actLevelList))
 
 
 def metricsCSV(timeThreadList, actModeList, probableList, actLevelList):
