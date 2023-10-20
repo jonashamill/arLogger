@@ -28,6 +28,9 @@ start = time.perf_counter()
 maxVel = 0
 
 
+
+
+
 activityLevel = 50
 ranDomNo = 50
 
@@ -84,10 +87,11 @@ def getPath():
     path = os.path.join(packagePath, "logs")
 
     fullpath = os.path.join(path, timenow + "_TTH_" + timeThresholdLow + "_" + timeThresholdHigh + "_arlog.csv")
+    metricfullpath = os.path.join(path, timenow + "_TTH_" + timeThresholdLow + "_" + timeThresholdHigh + "_metricslog.csv")
 
     print (fullpath)
 
-    return path, fullpath
+    return path, fullpath, metricfullpath
 
 def makeFolder():
 
@@ -278,14 +282,25 @@ def beHaveFun():
     global activityMode
     global activityLevel
     global ranDomNo
+    global start
+    global activityLevel
 
-    
+
+    actModeList = []
+    actLevelList = []
+    probableList = []
+    timeThreadList = []
+        
 
     while not rospy.is_shutdown():
         
         ranDomNo = random.randrange(0,101)
 
-        # rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))
+        # rospy.loginfo('behave: ' + str(activityLevel) + ' random: ' + str(ranDomNo))            
+        # 
+        finish = time.perf_counter()
+   
+        timeTaken = round(finish-start, 2)
 
         
 
@@ -306,6 +321,12 @@ def beHaveFun():
             activityOutput = 'Explore - (Neophilic)'
         
             # rospy.loginfo('Explore Activity Mode - (Neophilic)')
+
+        
+        actModeList.append(activityMode)
+        timeThreadList.append(timeTaken)
+        probableList.append(ranDomNo)
+        actLevelList.append(activityLevel)
 
 
 
@@ -330,6 +351,21 @@ def beHaveFun():
         plasticPub.publish(activityMode)
 
         time.sleep(1)
+    
+    metricsCSV(timeThreadList, actModeList, probableList, actLevelList)
+
+
+def metricsCSV(timeThreadList, actModeList, probableList, actLevelList):
+
+    _, _, filename = getPath()
+
+    with open(filename, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(['Time', 'Activity Mode', 'Probability Value', 'Activity Level'])
+        
+        for i in range(len(timeThreadList)):
+            writer.writerow([timeThreadList[i], actModeList[i], probableList[i], actLevelList[i]])
+
 
 if __name__ == '__main__':
     rosInit()
