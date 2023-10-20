@@ -356,7 +356,7 @@ def beHaveFun():
     
 
 
-def metricsCSV():
+def metricsCSV(timeThreadList, actModeList, probableList, actLevelList):
 
     _, _, filename = getPath()
 
