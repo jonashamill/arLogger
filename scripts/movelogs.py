@@ -6,11 +6,13 @@ import rospkg
 
 
 
-def rosInit():
+# def rosInit():
 
-    rospy.init_node("movelogs")
+#     # rospy.init_node("movelogs")
     
-    rospy.on_shutdown(movelogs)
+#     # rospy.on_shutdown(movelogs)
+
+#     movelogs()
 
 
 # Define a function to extract the publication date from the file name
@@ -28,11 +30,11 @@ def extract_publication_date(file_name):
 
 def movelogs():
 
-    rp = rospkg.RosPack()
-    packagePath = rp.get_path('arLogger')
+    # rp = rospkg.RosPack()
+    # packagePath = rp.get_path('arLogger')
 
     # Define the path to the 'logs' folder where the existing log files are located
-    logs_folder = os.path.join(packagePath, "logs")  # Update this with the actual path to your 'logs' folder
+    logs_folder = "logs" # os.path.join(packagePath, "logs")  # Update this with the actual path to your 'logs' folder
 
     # List all files in the 'logs' folder
     log_files = [f for f in os.listdir(logs_folder) if os.path.isfile(os.path.join(logs_folder, f))]
@@ -57,7 +59,7 @@ def movelogs():
 
 
 if __name__ == '__main__':
-    rosInit()
+    movelogs()
 
 
 # print("Log files have been organized into subfolders by publication date.")
