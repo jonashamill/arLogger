@@ -29,6 +29,10 @@ currentMarker = 999
 start = time.perf_counter()
 maxVel = 0
 
+timeThreadList =[]
+actModeList = []
+probableList = []
+actLevelList = []
 
 
 
@@ -63,6 +67,7 @@ def rosInit():
 
     
     rospy.on_shutdown(saveCSV)
+    rospy.on_shutdown(metricsCSV)
 
 def getTime():
 
@@ -288,12 +293,6 @@ def beHaveFun():
     global activityLevel
 
 
-    actModeList = []
-    actLevelList = []
-    probableList = []
-    timeThreadList = []
-        
-
     while not rospy.is_shutdown():
         
         ranDomNo = random.randrange(0,101)
@@ -354,7 +353,7 @@ def beHaveFun():
 
         time.sleep(1)
     
-    rospy.on_shutdown(metricsCSV(timeThreadList, actModeList, probableList, actLevelList))
+    
 
 
 def metricsCSV(timeThreadList, actModeList, probableList, actLevelList):
