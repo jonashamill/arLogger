@@ -88,16 +88,16 @@ def getPath():
 
     timenow, _ = getTime()
 
-    timeThresholdLo = 'np'
-    timeThresholdHig = timeThresholdLow
+    # timeThresholdLo = 'np'
+    # timeThresholdHig = timeThresholdLow
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
     path = os.path.join(packagePath, "logs")
 
-    fullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLo) + "_" + str(timeThresholdHig) + "_arlog.csv")
-    metricfullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLo) + "_" + str(timeThresholdHig) + "_metricslog.csv")
+    fullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
+    metricfullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
 
     print (fullpath)
 
