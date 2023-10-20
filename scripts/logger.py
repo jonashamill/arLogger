@@ -65,9 +65,9 @@ def rosInit():
     # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
     # rospy.Subscriber('minVelocity', Float32, minVelocityCallback)
 
-    
-    rospy.on_shutdown(saveCSV)
     rospy.on_shutdown(metricsCSV)
+    rospy.on_shutdown(saveCSV)
+    
 
 def getTime():
 
