@@ -8,7 +8,7 @@ def convert_time(rostime):
     return [datetime.strptime(t, '%H:%M:%S') for t in cleaned_time]
 
 # Load data from the first CSV
-arlog = 'logs/20231013212935_idlog.csv'
+arlog = 'logs/20231020190842_TTH_2_6_metricslog.csv'
 data1 = np.genfromtxt(arlog, delimiter=',', skip_header=1, dtype=str)
 
 rostime1, ID1, state1, behave_val1, random_no1 = data1[:, 3], data1[:, 0], data1[:, 6], data1[:, 4], data1[:, 5]
