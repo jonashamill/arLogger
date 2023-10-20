@@ -88,6 +88,9 @@ def getPath():
 
     timenow, _ = getTime()
 
+    timeThresholdLow = 'np'
+    timeThresholdHigh = timeThresholdLow
+
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
