@@ -291,6 +291,10 @@ def beHaveFun():
     global ranDomNo
     global start
     global activityLevel
+    global actModeList
+    global timeThreadList
+    global probableList
+    global actLevelList
 
 
     while not rospy.is_shutdown():
