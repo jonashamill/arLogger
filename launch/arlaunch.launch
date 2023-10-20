@@ -17,7 +17,7 @@
   </node>
 
   <node name="arLogger" pkg="arLogger" type="logger.py" output="screen">
-  <node name="movelogs" pkg="arLogger" type="movelogs.py" output="screen">
+  <!-- <node name="movelogs" pkg="arLogger" type="movelogs.py" output="screen"> -->
 
   <!-- <node name="jogger" pkg="arLogger" type="jogger.py" output="screen"> -->
     
