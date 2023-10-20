@@ -95,7 +95,7 @@ def getPath():
 
 def makeFolder():
 
-    path, _ = getPath()
+    path, _, _ = getPath()
 
     testFile = None
 
@@ -116,7 +116,7 @@ def makeFolder():
 
 def saveCSV():
     
-    _, filename = getPath()
+    _, filename, _ = getPath()
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
