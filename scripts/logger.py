@@ -58,8 +58,8 @@ def rosInit():
 
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
-    timeThresholdLow = rospy.get_param("~timeThresholdLow")
-    timeThresholdHigh = rospy.get_param("~timeThresholdHigh")
+    timeThresholdLow = rospy.get_param("~timeThresholdLow", 5)
+    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
     # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
