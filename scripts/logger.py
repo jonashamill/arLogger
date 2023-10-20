@@ -132,6 +132,17 @@ def saveCSV():
         for i in range(len(activityModeList)):
             writer.writerow([idList[i], timeList[i], timeSinceList[i], rosTimeList[i], activityLevelList[i],ranNoList[i],activityModeList[i]])
 
+def metricsCSV():
+
+    _, _, filename = getPath()
+
+    with open(filename, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(['Time', 'Activity Mode', 'Probability Value', 'Activity Level'])
+        
+        for i in range(len(actModeList)):
+            writer.writerow([timeThreadList[i], actModeList[i], probableList[i], actLevelList[i]])
+
 
 
 
@@ -359,17 +370,6 @@ def beHaveFun():
     
     
 
-
-def metricsCSV():
-
-    _, _, filename = getPath()
-
-    with open(filename, "w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(['Time', 'Activity Mode', 'Probability Value', 'Activity Level'])
-        
-        for i in range(len(timeThreadList)):
-            writer.writerow([timeThreadList[i], actModeList[i], probableList[i], actLevelList[i]])
 
 
 if __name__ == '__main__':
