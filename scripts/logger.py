@@ -93,8 +93,8 @@ def getPath():
 
     path = os.path.join(packagePath, "logs")
 
-    fullpath = os.path.join(path, timenow + "_TTH_" + timeThresholdLow + "_" + timeThresholdHigh + "_arlog.csv")
-    metricfullpath = os.path.join(path, timenow + "_TTH_" + timeThresholdLow + "_" + timeThresholdHigh + "_metricslog.csv")
+    fullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
+    metricfullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
 
     print (fullpath)
 
