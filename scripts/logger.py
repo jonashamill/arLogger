@@ -369,7 +369,7 @@ def metricsCSV(timeThreadList, actModeList, probableList, actLevelList):
 
 if __name__ == '__main__':
     rosInit()
-    makeFolder()
+    # makeFolder()
 
     activityLevelLock = threading.Lock()
 
