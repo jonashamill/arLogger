@@ -34,11 +34,11 @@ ax2 = ax1.twinx()
 activity_mode_labels = [map_activity_mode(mode) for mode in activity_mode]
 ax2.plot(time, activity_mode, color='tab:green', label='Activity Mode')
 ax2.set_yticks([0, 1])
-ax2.set_yticklabels(['patrol - neophobic', 'explore - neophilic'])
+ax2.set_yticklabels(['Patrol - (neophobic)', 'Explore - (neophilic)'])
 ax2.set_ylabel('Activity Mode', color='black')
 ax2.tick_params(axis='y', labelcolor='black')
 ax2.legend(loc='upper right')
 
 # Display the plot
-plt.title('Activity Data')
+plt.title('Single Trial TTH 6,10')
 plt.show()
