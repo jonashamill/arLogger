@@ -33,7 +33,9 @@ conditions = [
 
 # Create a figure with subplots
 fig, axs = plt.subplots(2, 2, figsize=(12, 8))
-fig.suptitle("Cumulative Number of AR Tags Over Time")
+fig.suptitle("Number of AR Tags Detected Across All Trials")
+
+integral_values = []  # Store the integral values
 
 # Iterate through each condition and plot it on a subplot
 for i, (condition, trial_files) in enumerate(conditions):
@@ -100,7 +102,10 @@ for i, (condition, trial_files) in enumerate(conditions):
     ax.errorbar(time_data - time_data[0], mean_tags, yerr=std_tags, fmt='-o')
     ax.set_xlabel("Time (seconds)")
     ax.set_ylabel("AR tags Detected")
-    ax.set_title(f"Condition: {condition}")
+    if condition != 'NP':
+        ax.set_title(f"TTH: {condition}")
+    else:
+        ax.set_title(f"No Plasticity (Constant Patrol)")
     ax.grid(True)
 
     # Calculate the derivative of the curve
@@ -115,9 +120,25 @@ for i, (condition, trial_files) in enumerate(conditions):
     # Calculate the integral of the curve (area under the curve)
     integral = simps(mean_tags, time_data - time_data[0])
 
+    # Store the integral values
+    integral_values.append(integral)
+
     # Replace the derivative label with the integral value
     ax2.text(0.5, -0.35, f"Integral: {integral:.2f}", transform=ax.transAxes, fontsize=10, ha='center')
 
 plt.tight_layout(rect=[0, 0, 1, 0.96])
+
+# Create a bar chart for integral values only
+labels = [f'No Plasticity' if i == 2 else f'TTH {conditions[i][0]}' for i in range(len(conditions))]
+values_integral = integral_values
+
+# Create a new figure for the bar chart
+plt.figure(figsize=(10, 6))
+plt.bar(labels, values_integral, width=0.2, align='edge', label='Integral')
+plt.ylabel("Integral")
+plt.legend(loc='upper left')
+plt.title('Integrals of the Respective Curves')  # Add the title
+
+plt.tight_layout()
 
 plt.show()
