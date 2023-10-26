@@ -142,3 +142,27 @@ plt.title('Integrals of the Respective Curves')  # Add the title
 plt.tight_layout()
 
 plt.show()
+
+# Create a new figure for the box plots
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Prepare data for box plots
+box_data = []
+box_labels = []
+
+for i, (condition, _) in enumerate(conditions):
+    cumulative_tags_all_trials = np.array(cumulative_tags_all_trials)
+    box_data.append(np.max(cumulative_tags_all_trials, axis=1))  # Use the last value as it's cumulative
+    if condition != 'NP':
+        box_labels.append(f"TTH: {condition}")
+    else:
+        box_labels.append("No Plasticity")
+
+# Create box plots
+ax.boxplot(box_data, labels=box_labels)
+
+ax.set_ylabel("Total AR Tags Detected")
+ax.set_title("Box Plots of Total AR Tags Detected for Each Condition")
+
+plt.tight_layout()
+plt.show()
