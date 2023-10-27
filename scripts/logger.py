@@ -10,6 +10,7 @@ import os
 from std_msgs.msg import Int32, String
 import random
 import threading
+import socket
 
 #Global vars
 idList = []
@@ -91,13 +92,15 @@ def getPath():
     # timeThresholdLo = 'np'
     # timeThresholdHig = timeThresholdLow
 
+    hostName = socket.gethostbyname
+
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
     path = os.path.join(packagePath, "logs")
 
-    fullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
-    metricfullpath = os.path.join(path, timenow + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
+    fullpath = os.path.join(path, timenow, hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
+    metricfullpath = os.path.join(path, timenow, hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
 
     print (fullpath)
 
