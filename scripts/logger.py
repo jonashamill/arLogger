@@ -15,7 +15,7 @@ import threading
 idList = []
 idListBuffer = []
 idQTY = 0
-idQTYList = 0
+idQTYList = []
 
 
 timeList = []
@@ -141,10 +141,10 @@ def metricsCSV():
 
     with open(filename, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(['Time', 'Activity Mode', 'Probability Value', 'Activity Level'])
+        writer.writerow(['Time', 'Activity Mode', 'Probability Value', 'Activity Level', 'Tags Detected'])
         
         for i in range(len(actModeList)):
-            writer.writerow([timeThreadList[i], actModeList[i], probableList[i], actLevelList[i]])
+            writer.writerow([timeThreadList[i], actModeList[i], probableList[i], actLevelList[i], idQTY[i]])
 
 
 
@@ -166,6 +166,7 @@ def getTag(msg):
     global activityModeList
     global ranDomNo
     global activityLevel
+    global idQTY
 
 
     for marker in msg.markers:
@@ -222,6 +223,8 @@ def getTag(msg):
                 timeList.append(timeTaken)
                 
                 idListBuffer.append(currentMarker)
+
+                idQTY += 1
 
                 if len(idListBuffer) > 5: #this will be replaced with time
                     idList.extend(idListBuffer)
@@ -286,7 +289,6 @@ def checkTimeHigh():
         timeVar += 1
 
         if timeVar >= timeThresholdHigh:
-            # with activityLevelLock:
             activityLevel -= 5
 
             activityLevel = max(0, min(100, activityLevel))
@@ -309,6 +311,7 @@ def beHaveFun():
     global timeThreadList
     global probableList
     global actLevelList
+    global idQTY
 
 
     while not rospy.is_shutdown():
@@ -346,6 +349,7 @@ def beHaveFun():
         timeThreadList.append(timeTaken)
         probableList.append(ranDomNo)
         actLevelList.append(activityLevel)
+        idQTYList.append(idQTY)
 
 
 
@@ -378,8 +382,6 @@ def beHaveFun():
 if __name__ == '__main__':
     rosInit()
     # makeFolder()
-
-    activityLevelLock = threading.Lock()
 
 
     plastic_thread = threading.Thread(target=beHaveFun)
