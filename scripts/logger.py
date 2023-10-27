@@ -92,7 +92,7 @@ def getPath():
     # timeThresholdLo = 'np'
     # timeThresholdHig = timeThresholdLow
 
-    hostName = socket.gethostbyname
+    hostName = socket.gethostname()
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
