@@ -59,8 +59,8 @@ def rosInit():
 
 
     # Get the 'timeThresholdLow' and 'timeThresholdHigh' parameters from the parameter server
-    timeThresholdLow = rospy.get_param("~timeThresholdLow", 100)
-    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 200)
+    timeThresholdLow = rospy.get_param("~timeThresholdLow", 2)
+    timeThresholdHigh = rospy.get_param("~timeThresholdHigh", 6)
 
 
     # rospy.Subscriber('maxVelocity', Float32, maxVelocityCallback)
@@ -92,15 +92,15 @@ def getPath():
     # timeThresholdLo = 'np'
     # timeThresholdHig = timeThresholdLow
 
-    hostName = socket.gethostname()
+    hostName = str(socket.gethostname())
 
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
     path = os.path.join(packagePath, "logs")
 
-    fullpath = os.path.join(path, timenow, hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
-    metricfullpath = os.path.join(path, timenow, hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
+    fullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
+    metricfullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
 
     print (fullpath)
 
