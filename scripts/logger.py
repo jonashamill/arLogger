@@ -370,6 +370,12 @@ def beHaveFun():
 
         activityPub.publish(activityPubOutput)
 
+        metricsOutput = str(timeTaken) + "," + str(activityMode) + "," + str(ranDomNo)+ "," + str(activityLevel)+ "," + str(idQTY)
+        metricsMessage = String()
+        metricsMessage.data = metricsOutput
+
+        metricsPub = rospy.Publisher('metricsTopic', String, queue_size=10)
+        metricsPub.publish(metricsMessage)        
 
 
         # Publish 'plastic' as a ROS topic
