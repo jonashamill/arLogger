@@ -370,7 +370,7 @@ def beHaveFun():
 
         activityPub.publish(activityPubOutput)
 
-        metricsOutput = str(timeTaken) + "," + str(activityMode) + "," + str(ranDomNo)+ "," + str(activityLevel)+ "," + str(idQTY)
+        metricsOutput = metricsOutput = "{},{},{},{},{}".format(timeTaken, activityMode, ranDomNo, activityLevel, idQTY)
         metricsMessage = String()
         metricsMessage.data = metricsOutput
 
