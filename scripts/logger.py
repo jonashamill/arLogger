@@ -97,7 +97,13 @@ def getPath():
     rp = rospkg.RosPack()
     packagePath = rp.get_path('arLogger')
 
-    path = os.path.join(packagePath, "logs")
+    # path = os.path.join(packagePath, "logs")
+
+    path = (packagePath + "/logs/" + hostName + "/TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "/extras/")
+
+
+    if not os.path.exists(path):
+        os.makedirs(path)
 
     fullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
     metricfullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
