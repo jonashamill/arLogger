@@ -105,8 +105,8 @@ def getPath():
     if not os.path.exists(path):
         os.makedirs(path)
 
-    fullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlog.csv")
-    metricfullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslog.csv")
+    fullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_arlogsimtest.csv")
+    metricfullpath = os.path.join(path, timenow + hostName + "_TTH_" + str(timeThresholdLow) + "_" + str(timeThresholdHigh) + "_metricslogsimtest.csv")
 
     print (fullpath)
 

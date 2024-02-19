@@ -1,27 +1,34 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="cam_image_topic" default="camera/image_raw" />
-  <arg name="cam_info_topic" default="camera/camera_info" />
+   <arg name="robot_ns" default="robot1"/>
 
 
-  <param name="/tf2/buffer/warnings/TF_REPEATED_DATA" value="0"/>
+  <!-- <group ns="$(arg robot_ns)"> -->
 
 
-  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
+    <arg name="cam_image_topic" default="camera/image_raw" />
+    <arg name="cam_info_topic" default="camera/camera_info" />
 
-    <rosparam command="load" file="$(find leo_example_follow_ar_tag)/config/alvar.yaml" />
 
-    <remap from="camera_image" to="$(arg cam_image_topic)" />
-    <remap from="camera_info" to="$(arg cam_info_topic)" />
-  </node>
+    <param name="/tf2/buffer/warnings/TF_REPEATED_DATA" value="0"/>
 
-  <node name="arLogger" pkg="arLogger" type="logger.py" output="screen">
-  <!-- <node name="movelogs" pkg="arLogger" type="movelogs.py" output="screen"> -->
 
-  <!-- <node name="jogger" pkg="arLogger" type="jogger.py" output="screen"> -->
-    
-  </node>
+    <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" output="screen">
+
+      <rosparam command="load" file="$(find leo_example_follow_ar_tag)/config/alvar.yaml" />
+
+      <remap from="camera_image" to="$(arg cam_image_topic)" />
+      <remap from="camera_info" to="$(arg cam_info_topic)" />
+    </node>
+
+    <node name="arLogger" pkg="arLogger" type="logger.py" output="screen">
+    <!-- <node name="movelogs" pkg="arLogger" type="movelogs.py" output="screen"> -->
+
+    <!-- <node name="jogger" pkg="arLogger" type="jogger.py" output="screen"> -->
+      
+    </node>
+  <!-- </group> -->
 
 </launch>
  
